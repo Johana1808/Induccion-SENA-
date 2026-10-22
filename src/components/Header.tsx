@@ -41,11 +41,11 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors duration-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-6">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
         
         {/* Zone 1: Wordmark */}
-        <div className="flex items-center gap-3 shrink-0">
-          <div className="w-10 h-10 flex items-center justify-center shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0 shrink">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shrink-0">
             <img
               src={SENA_LOGO_SRC}
               alt="Logo Oficial SENA"
@@ -54,13 +54,13 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
           <button
             onClick={() => setActiveTab(userRole === 'instructor' ? 'instructor' : 'modules')}
-            className="text-left group cursor-pointer focus:outline-none"
+            className="text-left group cursor-pointer focus:outline-none min-w-0 truncate"
           >
-            <div className="flex items-center gap-2">
-              <span className="text-base font-bold text-slate-900 dark:text-white tracking-tight leading-tight group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
+            <div className="flex items-center gap-1.5 truncate">
+              <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white tracking-tight leading-tight group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors truncate">
                 Inducción SENA
               </span>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+              <span className={`text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full shrink-0 ${
                 userRole === 'instructor' 
                   ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' 
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
@@ -68,8 +68,8 @@ export const Header: React.FC<HeaderProps> = ({
                 {userRole === 'instructor' ? 'Instructor' : 'Aprendiz'}
               </span>
             </div>
-            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block">
-              Acuerdo 009 de 2024 · Modificado 2026
+            <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium block truncate">
+              Acuerdo 009 de 2024 · 2026
             </span>
           </button>
         </div>
