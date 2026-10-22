@@ -23,6 +23,7 @@ import { ApprenticeBadgesHUD } from './components/ApprenticeBadgesHUD';
 import { InstructorDashboard } from './components/InstructorDashboard';
 import { RoleSelectionLanding } from './components/RoleSelectionLanding';
 import { sendRecordToGoogleSheet } from './services/sheetSyncService';
+import { t } from './utils/i18n';
 import { 
   BookOpen, 
   Compass, 
@@ -513,7 +514,7 @@ export default function App() {
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
             <span className="font-medium text-emerald-100">
-              Modo Aprendiz Activo: Pantalla exclusiva de inducción y certificación del estudiante.
+              {t[lang].activeLearnerNotice}
             </span>
           </div>
           <button
@@ -526,9 +527,9 @@ export default function App() {
               }
             }}
             className="px-3 py-1 bg-emerald-800 hover:bg-emerald-700 text-emerald-100 hover:text-white rounded-md text-[11px] font-semibold transition-colors flex items-center gap-1.5 cursor-pointer"
-            title="Cambiar perfil o volver al portal de acceso con clave"
+            title={lang === 'en' ? 'Switch profile or log out' : 'Cambiar perfil o volver al portal de acceso con clave'}
           >
-            <span>{sessionRole === 'instructor' ? 'Volver al Panel del Instructor' : 'Cambiar Rol / Salir'}</span>
+            <span>{sessionRole === 'instructor' ? t[lang].returnToInstructorPanel : t[lang].changeRoleOrExit}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -549,6 +550,7 @@ export default function App() {
             }}
             onResetRecords={() => setStudentsRecords(SEED_STUDENTS_RECORDS)}
             onOpenShareModal={() => setIsShareModalOpen(true)}
+            lang={lang}
           />
         ) : (
           /* Standard Induction Journey for Students (and instructor previewing modules) */
@@ -570,6 +572,7 @@ export default function App() {
               onOpenCertificate={() => setActiveTab('certificate')}
               onOpenShareModal={() => setIsShareModalOpen(true)}
               onOpenRecordsModal={() => setIsRecordsModalOpen(true)}
+              lang={lang}
             />
 
             {/* Workspace Container */}
@@ -587,7 +590,7 @@ export default function App() {
                 }`}
               >
                 <BookOpen className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-                <span>1. Módulos del Reglamento</span>
+                <span>{t[lang].subnavModules}</span>
               </button>
 
               <button
@@ -599,7 +602,7 @@ export default function App() {
                 }`}
               >
                 <Compass className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-                <span>2. Dilemas Prácticos</span>
+                <span>{t[lang].subnavDilemmas}</span>
               </button>
 
               <button
@@ -611,7 +614,7 @@ export default function App() {
                 }`}
               >
                 <GraduationCap className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-                <span>3. Evaluación Gamificada</span>
+                <span>{t[lang].subnavQuiz}</span>
               </button>
 
               <button
@@ -623,7 +626,7 @@ export default function App() {
                 }`}
               >
                 <Search className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-                <span>4. Buscador Normativo</span>
+                <span>{t[lang].subnavRulebook}</span>
               </button>
             </div>
 
@@ -638,7 +641,7 @@ export default function App() {
               }`}
             >
               <Award className="w-4 h-4" />
-              <span>5. Certificado Oficial</span>
+              <span>{t[lang].subnavCert}</span>
               {hasPassedQuiz && (
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 ml-0.5" />
               )}
@@ -651,6 +654,7 @@ export default function App() {
               completedModules={completedModules}
               onCompleteModule={handleCompleteModule}
               onGoToDilemmas={() => setActiveTab('dilemmas')}
+              lang={lang}
             />
           )}
 
@@ -659,6 +663,7 @@ export default function App() {
               solvedDilemmas={solvedDilemmas}
               onSolveDilemma={handleSolveDilemma}
               onGoToQuiz={() => setActiveTab('quiz')}
+              lang={lang}
             />
           )}
 
@@ -667,11 +672,12 @@ export default function App() {
               onCompleteQuiz={handleCompleteQuiz}
               onGoToCertificate={() => setActiveTab('certificate')}
               bestScore={quizScore}
+              lang={lang}
             />
           )}
 
           {activeTab === 'rulebook' && (
-            <RulebookExplorer />
+            <RulebookExplorer lang={lang} />
           )}
 
           {activeTab === 'certificate' && (
@@ -681,11 +687,12 @@ export default function App() {
               quizScore={quizScore}
               onOpenProfileModal={() => setIsProfileModalOpen(true)}
               onGoToQuiz={() => setActiveTab('quiz')}
+              lang={lang}
             />
           )}
 
           {/* Gamification Medals & Badges HUD */}
-          <ApprenticeBadgesHUD totalXp={totalXp} />
+          <ApprenticeBadgesHUD totalXp={totalXp} lang={lang} />
 
           {/* Institutional Rest & Campus Showcase Section */}
           <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-xs transition-colors duration-200">
@@ -693,21 +700,21 @@ export default function App() {
               <div className="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
-                    <span className="text-emerald-700 dark:text-emerald-400 font-semibold">Infraestructura y Convivencia</span>
+                    <span className="text-emerald-700 dark:text-emerald-400 font-semibold">{t[lang].campusSectionTag}</span>
                     <span>·</span>
-                    <span>Centros de Formación</span>
+                    <span>{t[lang].campusSectionSubtag}</span>
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                    Tu Centro de Formación: Espacio de Innovación y Cuidado Mutuo
+                    {t[lang].campusSectionTitle}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Los ambientes de formación, laboratorios de robótica, aulas especializadas y zonas verdes son patrimonio de todos los colombianos. Conocer y aplicar el Reglamento del Aprendiz (Acuerdo 009 de 2024) garantiza una convivencia armónica y el mejor aprovechamiento de las oportunidades que el SENA te brinda.
+                    {t[lang].campusSectionDesc}
                   </p>
                 </div>
 
                 <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                  <span>33 Regionales a Nivel Nacional</span>
-                  <span>118 Centros de Formación</span>
+                  <span>{t[lang].campusRegionalsStat}</span>
+                  <span>{t[lang].campusCentersStat}</span>
                 </div>
               </div>
 
@@ -734,6 +741,7 @@ export default function App() {
         onClose={() => setIsProfileModalOpen(false)}
         profile={profile}
         onSaveProfile={handleSaveProfile}
+        lang={lang}
       />
 
       {/* Share Link Modal for Instructors */}
@@ -742,6 +750,7 @@ export default function App() {
         onClose={() => setIsShareModalOpen(false)}
         currentProfile={profile}
         onOpenRecordsModal={() => setIsRecordsModalOpen(true)}
+        lang={lang}
       />
 
       {/* Student Welcome Onboarding for Individual Certification */}
@@ -750,6 +759,7 @@ export default function App() {
         onClose={() => setIsWelcomeModalOpen(false)}
         currentProfile={profile}
         onSaveProfile={handleSaveProfile}
+        lang={lang}
       />
 
       {/* Instructor Apprentice Records & CSV/Excel Export Modal */}
@@ -759,6 +769,7 @@ export default function App() {
         records={studentsRecords}
         onResetRecords={() => setStudentsRecords(SEED_STUDENTS_RECORDS)}
         currentFicha={profile.fichaCode}
+        lang={lang}
       />
 
       {/* Anti-slop Restrained Footer */}
@@ -768,7 +779,7 @@ export default function App() {
             <div className="w-6 h-6 rounded bg-emerald-700 text-white font-bold text-[10px] flex items-center justify-center">
               SENA
             </div>
-            <span>Servicio Nacional de Aprendizaje SENA · Acuerdo 009 de 2024 modificado por Acuerdo 002 de 2026</span>
+            <span>{t[lang].footerInstitutionLine}</span>
           </div>
 
           <div className="flex items-center gap-5 text-slate-600 dark:text-slate-400">
@@ -796,7 +807,7 @@ export default function App() {
               rel="noreferrer"
               className="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors flex items-center gap-1"
             >
-              <span>Agencia Pública de Empleo</span>
+              <span>{t[lang].footerEmploymentAgency}</span>
               <ExternalLink className="w-3 h-3 text-slate-400" />
             </a>
 
@@ -811,9 +822,9 @@ export default function App() {
                   }
                 }}
                 className="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors cursor-pointer text-slate-400 font-medium"
-                title="Acceso para instructores con contraseña"
+                title={lang === 'en' ? 'Instructor login with password' : 'Acceso para instructores con contraseña'}
               >
-                Acceso Instructor
+                {t[lang].footerInstructorAccess}
               </button>
             )}
           </div>
@@ -827,7 +838,7 @@ export default function App() {
             <Zap className="w-3.5 h-3.5" />
           </div>
           <div className="flex-1 text-xs">
-            <span className="font-bold text-emerald-300 block mb-0.5">Sincronización Automática</span>
+            <span className="font-bold text-emerald-300 block mb-0.5">{t[lang].autoSyncToastTitle}</span>
             <p className="text-slate-300 leading-relaxed text-[11px]">{syncToast}</p>
           </div>
         </div>

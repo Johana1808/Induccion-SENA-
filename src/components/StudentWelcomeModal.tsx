@@ -7,6 +7,7 @@ interface StudentWelcomeModalProps {
   onClose: () => void;
   currentProfile: ApprenticeProfile;
   onSaveProfile: (profile: ApprenticeProfile) => void;
+  lang?: 'es' | 'en';
 }
 
 export const StudentWelcomeModal: React.FC<StudentWelcomeModalProps> = ({
@@ -14,6 +15,7 @@ export const StudentWelcomeModal: React.FC<StudentWelcomeModalProps> = ({
   onClose,
   currentProfile,
   onSaveProfile,
+  lang = 'es',
 }) => {
   const [fullName, setFullName] = useState('');
   const [documentType, setDocumentType] = useState(currentProfile.documentType || 'Cédula de Ciudadanía');
@@ -36,7 +38,7 @@ export const StudentWelcomeModal: React.FC<StudentWelcomeModalProps> = ({
       fullName: fullName.trim(),
       documentType,
       documentNumber: documentNumber.trim(),
-      inductionDate: new Date().toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })
+      inductionDate: new Date().toLocaleDateString(lang === 'en' ? 'en-US' : 'es-CO', { year: 'numeric', month: 'long', day: 'numeric' })
     });
     onClose();
   };
@@ -50,15 +52,15 @@ export const StudentWelcomeModal: React.FC<StudentWelcomeModalProps> = ({
           <div className="relative z-10 space-y-2">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-700/80 rounded-md text-[11px] font-semibold text-emerald-100 uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              <span>Inducción Oficial SENA 2024</span>
+              <span>{lang === 'en' ? 'Official SENA Induction 2026' : 'Inducción Oficial SENA 2026'}</span>
             </div>
             
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
-              ¡Bienvenido(a) a tu Formación!
+              {lang === 'en' ? 'Welcome to your Training!' : '¡Bienvenido(a) a tu Formación!'}
             </h2>
             
             <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed">
-              Ficha <strong className="text-white font-mono">{currentProfile.fichaCode}</strong> · {currentProfile.programName}
+              {lang === 'en' ? 'Batch' : 'Ficha'} <strong className="text-white font-mono">{currentProfile.fichaCode}</strong> · {currentProfile.programName}
             </p>
           </div>
 
@@ -72,16 +74,18 @@ export const StudentWelcomeModal: React.FC<StudentWelcomeModalProps> = ({
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div className="space-y-1">
             <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-              Ingresa tus datos personales
+              {lang === 'en' ? 'Enter your personal details' : 'Ingresa tus datos personales'}
             </h3>
             <p className="text-xs text-slate-600 dark:text-slate-300">
-              Tu nombre y documento aparecerán impresos en tu <strong>Certificado Oficial de Culminación de Inducción (Acuerdo 009 de 2024 modificado por el Acuerdo 002 de 2026)</strong> una vez apruebes las actividades.
+              {lang === 'en'
+                ? 'Your name and ID will appear printed on your Official Induction Completion Certificate (Agreement 009 of 2024 modified by Agreement 002 of 2026) upon passing the activities.'
+                : 'Tu nombre y documento aparecerán impresos en tu Certificado Oficial de Culminación de Inducción (Acuerdo 009 de 2024 modificado por el Acuerdo 002 de 2026) una vez apruebes las actividades.'}
             </p>
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              Nombre Completo del Aprendiz
+              {lang === 'en' ? 'Apprentice Full Name *' : 'Nombre Completo del Aprendiz *'}
             </label>
             <input
               type="text"
@@ -90,30 +94,30 @@ export const StudentWelcomeModal: React.FC<StudentWelcomeModalProps> = ({
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600"
-              placeholder="Ej. Andrés Camilo Rodríguez Flórez"
+              placeholder={lang === 'en' ? 'E.g., Laura Sofia Gomez Rodriguez' : 'Ej. Andrés Camilo Rodríguez Flórez'}
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Tipo de Documento
+                {lang === 'en' ? 'Document Type' : 'Tipo de Documento'}
               </label>
               <select
                 value={documentType}
                 onChange={(e) => setDocumentType(e.target.value)}
-                className="w-full px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 cursor-pointer"
+                className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 cursor-pointer"
               >
-                <option value="Cédula de Ciudadanía">Cédula de Ciudadanía (C.C.)</option>
-                <option value="Tarjeta de Identidad">Tarjeta de Identidad (T.I.)</option>
-                <option value="Cédula de Extranjería">Cédula de Extranjería (C.E.)</option>
-                <option value="Permiso por Protección Temporal">Permiso de Protección (PPT)</option>
+                <option value="Cédula de Ciudadanía">{lang === 'en' ? 'National ID (C.C.)' : 'Cédula de Ciudadanía (C.C.)'}</option>
+                <option value="Tarjeta de Identidad">{lang === 'en' ? 'Identity Card (T.I.)' : 'Tarjeta de Identidad (T.I.)'}</option>
+                <option value="Cédula de Extranjería">{lang === 'en' ? 'Foreigner ID (C.E.)' : 'Cédula de Extranjería (C.E.)'}</option>
+                <option value="Permiso por Protección Temporal">{lang === 'en' ? 'Temporary Protection Permit (PPT)' : 'Permiso de Protección (PPT)'}</option>
               </select>
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Número de Documento
+                {lang === 'en' ? 'Document Number *' : 'Número de Documento *'}
               </label>
               <input
                 type="text"
@@ -129,7 +133,7 @@ export const StudentWelcomeModal: React.FC<StudentWelcomeModalProps> = ({
           <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <span className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-              <span>Datos protegidos para certificación</span>
+              <span>{lang === 'en' ? 'Protected data for certification' : 'Datos protegidos para certificación'}</span>
             </span>
 
             <button
@@ -137,7 +141,7 @@ export const StudentWelcomeModal: React.FC<StudentWelcomeModalProps> = ({
               disabled={!fullName.trim() || !documentNumber.trim()}
               className="px-5 py-2.5 text-xs sm:text-sm font-semibold text-white bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-300 dark:disabled:bg-slate-800 disabled:text-slate-500 rounded-lg transition-colors flex items-center gap-2 cursor-pointer shadow-xs"
             >
-              <span>Comenzar mi Inducción</span>
+              <span>{lang === 'en' ? 'Start My Induction' : 'Comenzar mi Inducción'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

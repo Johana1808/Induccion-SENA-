@@ -9,27 +9,31 @@ import {
   Sparkles,
   RotateCcw
 } from 'lucide-react';
-import { CASE_DILEMMAS } from '../data/inductionContent';
+import { CaseDilemma, getCaseDilemmas } from '../data/inductionContent';
+import { t } from '../utils/i18n';
 
 interface DilemmasSimulatorProps {
   solvedDilemmas: Record<string, number>; // dilemmaId -> chosenOptionIndex
   onSolveDilemma: (dilemmaId: string, optionIndex: number, points: number) => void;
   onGoToQuiz: () => void;
+  lang?: 'es' | 'en';
 }
 
 export const DilemmasSimulator: React.FC<DilemmasSimulatorProps> = ({
   solvedDilemmas,
   onSolveDilemma,
-  onGoToQuiz
+  onGoToQuiz,
+  lang = 'es',
 }) => {
-  const [activeDilemmaId, setActiveDilemmaId] = useState<string>(CASE_DILEMMAS[0].id);
+  const dilemmasList = getCaseDilemmas(lang);
+  const [activeDilemmaId, setActiveDilemmaId] = useState<string>(dilemmasList[0].id);
 
-  const activeDilemma = CASE_DILEMMAS.find(d => d.id === activeDilemmaId) || CASE_DILEMMAS[0];
+  const activeDilemma = dilemmasList.find(d => d.id === activeDilemmaId) || dilemmasList[0];
   const chosenIndex = solvedDilemmas[activeDilemma.id] !== undefined ? solvedDilemmas[activeDilemma.id] : null;
   const isSolved = chosenIndex !== null;
 
   const totalSolvedCount = Object.keys(solvedDilemmas).length;
-  const allSolved = totalSolvedCount === CASE_DILEMMAS.length;
+  const allSolved = totalSolvedCount === dilemmasList.length;
 
   const handleSelectOption = (index: number) => {
     if (isSolved) return;
@@ -38,9 +42,9 @@ export const DilemmasSimulator: React.FC<DilemmasSimulatorProps> = ({
   };
 
   const handleNextDilemma = () => {
-    const currentIndex = CASE_DILEMMAS.findIndex(d => d.id === activeDilemmaId);
-    if (currentIndex < CASE_DILEMMAS.length - 1) {
-      setActiveDilemmaId(CASE_DILEMMAS[currentIndex + 1].id);
+    const currentIndex = dilemmasList.findIndex(d => d.id === activeDilemmaId);
+    if (currentIndex < dilemmasList.length - 1) {
+      setActiveDilemmaId(dilemmasList[currentIndex + 1].id);
     }
   };
 
@@ -51,25 +55,25 @@ export const DilemmasSimulator: React.FC<DilemmasSimulatorProps> = ({
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors duration-200">
         <div>
           <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium mb-1">
-            <span className="text-emerald-700 dark:text-emerald-400 font-semibold">Simulador de Toma de Decisiones</span>
+            <span className="text-emerald-700 dark:text-emerald-400 font-semibold">{t[lang].dilemmaSimulatorTag}</span>
             <span aria-hidden="true">·</span>
-            <span>Casos Reales en el SENA</span>
+            <span>{t[lang].dilemmaRealCases}</span>
             <span aria-hidden="true">·</span>
-            <span>Acuerdo 009 de 2024</span>
+            <span>{t[lang].subtitle}</span>
           </div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-            Dilemas del Aprendiz: Aplica el Reglamento en la Vida Real
+            {t[lang].dilemmasTitle}
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-0.5">
-            Elige la respuesta más ética y apegada a la normatividad institucional para cada situación cotidiana.
+            {t[lang].dilemmasSubtitle}
           </p>
         </div>
 
         <div className="flex items-center gap-3 shrink-0">
           <div className="text-right">
-            <span className="block text-xs text-slate-500 dark:text-slate-400">Casos Resueltos</span>
+            <span className="block text-xs text-slate-500 dark:text-slate-400">{t[lang].dilemmasSolved}</span>
             <span className="font-mono text-base font-bold text-emerald-700 dark:text-emerald-400 tabular-nums">
-              {totalSolvedCount} de {CASE_DILEMMAS.length}
+              {totalSolvedCount} {lang === 'en' ? 'of' : 'de'} {dilemmasList.length}
             </span>
           </div>
           {allSolved && (
@@ -77,7 +81,7 @@ export const DilemmasSimulator: React.FC<DilemmasSimulatorProps> = ({
               onClick={onGoToQuiz}
               className="px-4 py-2 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
             >
-              <span>Ir a la Evaluación</span>
+              <span>{t[lang].goToQuizBtn}</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           )}
@@ -86,7 +90,7 @@ export const DilemmasSimulator: React.FC<DilemmasSimulatorProps> = ({
 
       {/* Dilemma Selector Tabs */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-        {CASE_DILEMMAS.map((dilemma, idx) => {
+        {dilemmasList.map((dilemma, idx) => {
           const isCaseSolved = solvedDilemmas[dilemma.id] !== undefined;
           const isCurrent = dilemma.id === activeDilemmaId;
           const userChoice = solvedDilemmas[dilemma.id];
@@ -103,7 +107,9 @@ export const DilemmasSimulator: React.FC<DilemmasSimulatorProps> = ({
               }`}
             >
               <div className="flex items-center justify-between text-xs mb-1">
-                <span className="font-semibold text-slate-700 dark:text-slate-300">Caso 0{idx + 1}</span>
+                <span className="font-semibold text-slate-700 dark:text-slate-300">
+                  {lang === 'en' ? 'Case' : 'Caso'} 0{idx + 1}
+                </span>
                 {isCaseSolved ? (
                   isOptimalChoice ? (
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -132,10 +138,10 @@ export const DilemmasSimulator: React.FC<DilemmasSimulatorProps> = ({
         <div className="p-6 bg-slate-50/80 dark:bg-slate-800/40 border-b border-slate-200 dark:border-slate-800 space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="text-xs font-semibold text-emerald-800 dark:text-emerald-400">
-              Eje Temático: {activeDilemma.category}
+              {lang === 'en' ? 'Category' : 'Eje Temático'}: {activeDilemma.category}
             </span>
             <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
-              Contexto: {activeDilemma.context}
+              {lang === 'en' ? 'Context' : 'Contexto'}: {activeDilemma.context}
             </span>
           </div>
 
@@ -151,7 +157,7 @@ export const DilemmasSimulator: React.FC<DilemmasSimulatorProps> = ({
         {/* Options */}
         <div className="p-6 space-y-4">
           <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-            ¿Cómo deberías actuar tú?
+            {t[lang].whatWouldYouDo}
           </h4>
 
           <div className="space-y-3">
@@ -211,19 +217,19 @@ export const DilemmasSimulator: React.FC<DilemmasSimulatorProps> = ({
                         {option.isOptimal ? (
                           <>
                             <CheckCircle2 className="w-4 h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
-                            <span>¡Decisión Correcta!</span>
+                            <span>{lang === 'en' ? 'Correct Decision!' : '¡Decisión Correcta!'}</span>
                           </>
                         ) : (
                           <>
                             <AlertTriangle className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0" />
-                            <span>Consecuencia Reglamentaria:</span>
+                            <span>{t[lang].decisionConsequence}:</span>
                           </>
                         )}
                       </div>
                       <p className="mb-2">{option.consequence}</p>
                       <div className="flex items-center gap-1.5 text-xs font-medium text-slate-700 dark:text-slate-300 pt-1 border-t border-slate-200/60 dark:border-slate-700">
                         <Scale className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
-                        <span>Fundamentación: <strong className="text-slate-900 dark:text-white">{option.articleReference}</strong></span>
+                        <span>{t[lang].legalSupport}: <strong className="text-slate-900 dark:text-white">{option.articleReference}</strong></span>
                       </div>
                     </div>
                   )}
@@ -239,10 +245,10 @@ export const DilemmasSimulator: React.FC<DilemmasSimulatorProps> = ({
           <div className="text-xs text-slate-500 dark:text-slate-400">
             {isSolved ? (
               <span className="font-medium text-emerald-800 dark:text-emerald-400">
-                Caso completado. Puedes avanzar al siguiente dilema.
+                {lang === 'en' ? 'Case completed. You can move to the next dilemma.' : 'Caso completado. Puedes avanzar al siguiente dilema.'}
               </span>
             ) : (
-              <span>Haz clic en una opción para responder.</span>
+              <span>{lang === 'en' ? 'Click on an option to respond.' : 'Haz clic en una opción para responder.'}</span>
             )}
           </div>
 
@@ -252,7 +258,7 @@ export const DilemmasSimulator: React.FC<DilemmasSimulatorProps> = ({
                 onClick={handleNextDilemma}
                 className="px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
               >
-                <span>Siguiente Caso</span>
+                <span>{t[lang].nextCaseBtn}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             )}

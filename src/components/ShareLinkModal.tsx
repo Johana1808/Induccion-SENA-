@@ -22,6 +22,7 @@ interface ShareLinkModalProps {
   onClose: () => void;
   currentProfile: ApprenticeProfile;
   onOpenRecordsModal?: () => void;
+  lang?: 'es' | 'en';
 }
 
 export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
@@ -29,6 +30,7 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
   onClose,
   currentProfile,
   onOpenRecordsModal,
+  lang = 'es',
 }) => {
   const [fichaCode, setFichaCode] = useState(currentProfile.fichaCode || '2874910');
   const [programName, setProgramName] = useState(currentProfile.programName || 'Tecnólogo en Análisis y Desarrollo de Software');
@@ -71,7 +73,9 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
   };
 
   const handleWhatsAppShare = () => {
-    const message = `Estimados aprendices SENA, les comparto el enlace para realizar la inducción interactiva al Reglamento del Aprendiz (Acuerdo 009 de 2024 modificado por el Acuerdo 002 de 2026) para la Ficha ${fichaCode} - ${programName}. Al finalizar la evaluación gamificada, cada uno obtendrá su certificado oficial a su nombre:\n\n${generatedUrl}`;
+    const message = lang === 'en'
+      ? `Dear SENA learners, here is the link to complete the interactive Apprentice Rulebook induction (Agreement 009 of 2024 modified by Agreement 002 of 2026) for Batch ${fichaCode} - ${programName}. Upon completing the gamified assessment, each of you will obtain your official certificate under your own name:\n\n${generatedUrl}`
+      : `Estimados aprendices SENA, les comparto el enlace para realizar la inducción interactiva al Reglamento del Aprendiz (Acuerdo 009 de 2024 modificado por el Acuerdo 002 de 2026) para la Ficha ${fichaCode} - ${programName}. Al finalizar la evaluación gamificada, cada uno obtendrá su certificado oficial a su nombre:\n\n${generatedUrl}`;
     const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -88,10 +92,12 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
             </div>
             <div>
               <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                Generador de Enlace para Aprendices
+                {lang === 'en' ? 'Learner Link Generator' : 'Generador de Enlace para Aprendices'}
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Envía este enlace a tus estudiantes para que cada uno genere su certificado a su nombre
+                {lang === 'en'
+                  ? 'Send this link to your students so each can generate a certificate under their own name'
+                  : 'Envía este enlace a tus estudiantes para que cada uno genere su certificado a su nombre'}
               </p>
             </div>
           </div>
@@ -118,7 +124,7 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
               }`}
             >
               <Users className="w-3.5 h-3.5" />
-              <span>Enlace General de la Ficha (Recomendado)</span>
+              <span>{lang === 'en' ? 'General Batch Link (Recommended)' : 'Enlace General de la Ficha (Recomendado)'}</span>
             </button>
             <button
               type="button"
@@ -130,18 +136,28 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
               }`}
             >
               <UserCheck className="w-3.5 h-3.5" />
-              <span>Aprendiz Específico</span>
+              <span>{lang === 'en' ? 'Specific Learner' : 'Aprendiz Específico'}</span>
             </button>
           </div>
 
           <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed bg-emerald-50/60 dark:bg-emerald-950/30 p-3 rounded-lg border border-emerald-200/80 dark:border-emerald-800/60">
             {linkMode === 'group' ? (
               <>
-                <strong className="text-emerald-900 dark:text-emerald-300">¿Cómo funciona?</strong> Al abrir el enlace, cada estudiante verá una pantalla de bienvenida a la Ficha {fichaCode || 'de tu curso'}. El estudiante ingresa su <strong>Nombre completo y Documento</strong>, realiza los módulos y la evaluación, y el <strong>certificado oficial se genera automáticamente con sus datos personales</strong>.
+                <strong className="text-emerald-900 dark:text-emerald-300">
+                  {lang === 'en' ? 'How does it work?' : '¿Cómo funciona?'}
+                </strong>{' '}
+                {lang === 'en'
+                  ? `When opening the link, each learner will see a welcome screen for Batch ${fichaCode || 'of your course'}. The student enters their Full Name and Document Number, completes the modules and assessment, and the official certificate is automatically generated with their personal credentials.`
+                  : `Al abrir el enlace, cada estudiante verá una pantalla de bienvenida a la Ficha ${fichaCode || 'de tu curso'}. El estudiante ingresa su Nombre completo y Documento, realiza los módulos y la evaluación, y el certificado oficial se genera automáticamente con sus datos personales.`}
               </>
             ) : (
               <>
-                <strong className="text-emerald-900 dark:text-emerald-300">Modo Individual:</strong> Los datos del aprendiz ya vendrán precargados en el enlace para que el estudiante no tenga que escribirlos manualmente.
+                <strong className="text-emerald-900 dark:text-emerald-300">
+                  {lang === 'en' ? 'Individual Mode:' : 'Modo Individual:'}
+                </strong>{' '}
+                {lang === 'en'
+                  ? 'The learner credentials will already come pre-loaded in the link so the student does not need to enter them manually.'
+                  : 'Los datos del aprendiz ya vendrán precargados en el enlace para que el estudiante no tenga que escribirlos manualmente.'}
               </>
             )}
           </p>
@@ -152,7 +168,7 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
               <div>
                 <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
                   <Hash className="w-3.5 h-3.5 text-slate-400" />
-                  Número de Ficha
+                  {lang === 'en' ? 'Batch Code (Ficha)' : 'Número de Ficha'}
                 </label>
                 <input
                   type="text"
@@ -165,16 +181,16 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
 
               <div>
                 <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Modalidad
+                  {lang === 'en' ? 'Modality' : 'Modalidad'}
                 </label>
                 <select
                   value={modality}
                   onChange={(e) => setModality(e.target.value as any)}
                   className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 cursor-pointer"
                 >
-                  <option value="Presencial">Presencial</option>
-                  <option value="Virtual">Virtual (Zajuna)</option>
-                  <option value="A Distancia">A Distancia / Mixta</option>
+                  <option value="Presencial">{lang === 'en' ? 'In-person' : 'Presencial'}</option>
+                  <option value="Virtual">{lang === 'en' ? 'Virtual (Zajuna)' : 'Virtual (Zajuna)'}</option>
+                  <option value="A Distancia">{lang === 'en' ? 'Distance / Mixed' : 'A Distancia / Mixta'}</option>
                 </select>
               </div>
             </div>
@@ -182,14 +198,14 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
             <div>
               <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
                 <BookOpen className="w-3.5 h-3.5 text-slate-400" />
-                Programa de Formación
+                {lang === 'en' ? 'Training Program' : 'Programa de Formación'}
               </label>
               <input
                 type="text"
                 value={programName}
                 onChange={(e) => setProgramName(e.target.value)}
                 className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600"
-                placeholder="Ej. Tecnólogo en Análisis y Desarrollo de Software"
+                placeholder={lang === 'en' ? 'E.g., Software Analysis and Development' : 'Ej. Tecnólogo en Análisis y Desarrollo de Software'}
               />
             </div>
 
@@ -197,27 +213,27 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
               <div>
                 <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
                   <Building className="w-3.5 h-3.5 text-slate-400" />
-                  Regional SENA
+                  {lang === 'en' ? 'SENA Regional' : 'Regional SENA'}
                 </label>
                 <input
                   type="text"
                   value={regional}
                   onChange={(e) => setRegional(e.target.value)}
                   className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600"
-                  placeholder="Ej. Regional Distrito Capital"
+                  placeholder={lang === 'en' ? 'E.g., Capital District' : 'Ej. Regional Distrito Capital'}
                 />
               </div>
 
               <div>
                 <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Centro de Formación
+                  {lang === 'en' ? 'Training Center' : 'Centro de Formación'}
                 </label>
                 <input
                   type="text"
                   value={trainingCenter}
                   onChange={(e) => setTrainingCenter(e.target.value)}
                   className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600"
-                  placeholder="Ej. Centro de Electricidad y Telecomunicaciones"
+                  placeholder={lang === 'en' ? 'E.g., Technology and Electricity Center' : 'Ej. Centro de Electricidad y Telecomunicaciones'}
                 />
               </div>
             </div>
@@ -226,24 +242,24 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
             {linkMode === 'individual' && (
               <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 space-y-3">
                 <span className="font-semibold text-slate-800 dark:text-slate-200 block">
-                  Datos del Aprendiz a Pre-cargar:
+                  {lang === 'en' ? 'Learner Data to Pre-fill:' : 'Datos del Aprendiz a Pre-cargar:'}
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-slate-600 dark:text-slate-400 mb-1">
-                      Nombre Completo
+                      {lang === 'en' ? 'Full Name' : 'Nombre Completo'}
                     </label>
                     <input
                       type="text"
                       value={studentName}
                       onChange={(e) => setStudentName(e.target.value)}
-                      placeholder="Ej. Juan Andrés Mora"
+                      placeholder={lang === 'en' ? 'E.g., John Smith' : 'Ej. Juan Andrés Mora'}
                       className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white"
                     />
                   </div>
                   <div>
                     <label className="block text-slate-600 dark:text-slate-400 mb-1">
-                      Número de Documento
+                      {lang === 'en' ? 'Document Number' : 'Número de Documento'}
                     </label>
                     <input
                       type="text"
@@ -262,7 +278,7 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
           {/* Generated URL Box */}
           <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
             <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
-              Enlace Generado Listo para Copiar:
+              {lang === 'en' ? 'Generated Link Ready to Copy:' : 'Enlace Generado Listo para Copiar:'}
             </label>
             <div className="flex items-center gap-2">
               <input
@@ -279,12 +295,12 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
                 {copied ? (
                   <>
                     <Check className="w-3.5 h-3.5" />
-                    <span>¡Copiado!</span>
+                    <span>{lang === 'en' ? 'Copied!' : '¡Copiado!'}</span>
                   </>
                 ) : (
                   <>
                     <Copy className="w-3.5 h-3.5" />
-                    <span>Copiar</span>
+                    <span>{lang === 'en' ? 'Copy' : 'Copiar'}</span>
                   </>
                 )}
               </button>
@@ -299,7 +315,7 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
               className="px-4 py-2.5 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
             >
               <Send className="w-4 h-4" />
-              <span>Compartir por WhatsApp</span>
+              <span>{lang === 'en' ? 'Share via WhatsApp' : 'Compartir por WhatsApp'}</span>
             </button>
 
             <button
@@ -308,7 +324,7 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
               className="px-4 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
             >
               <QrCode className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-              <span>{showQrProjector ? 'Ocultar Código QR' : 'Ver Código QR para Proyectar'}</span>
+              <span>{showQrProjector ? (lang === 'en' ? 'Hide QR Code' : 'Ocultar Código QR') : (lang === 'en' ? 'View QR Code to Project' : 'Ver Código QR para Proyectar')}</span>
             </button>
 
             {onOpenRecordsModal && (
@@ -321,7 +337,7 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
                 className="col-span-1 sm:col-span-2 px-4 py-2.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700/70 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 <FileSpreadsheet className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-                <span>Ver Consolidado y Descargar Registros (Excel / CSV)</span>
+                <span>{lang === 'en' ? 'View Consolidated & Download Records (Excel / CSV)' : 'Ver Consolidado y Descargar Registros (Excel / CSV)'}</span>
               </button>
             )}
           </div>
@@ -335,7 +351,10 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
                 </svg>
               </div>
               <p className="text-xs font-medium text-slate-700 dark:text-slate-300">
-                Escanea con el celular para acceder directamente a la inducción de la Ficha <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">{fichaCode}</span>
+                {lang === 'en'
+                  ? `Scan with phone to directly access induction for Batch `
+                  : `Escanea con el celular para acceder directamente a la inducción de la Ficha `}
+                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">{fichaCode}</span>
               </p>
             </div>
           )}
@@ -344,12 +363,12 @@ export const ShareLinkModal: React.FC<ShareLinkModalProps> = ({
 
         {/* Footer */}
         <div className="px-6 py-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/40">
-          <span>Acuerdo 009 de 2024 (Modificado por Acuerdo 002 de 2026 SENA)</span>
+          <span>{lang === 'en' ? 'Agreement 009 of 2024 (Modified by Agreement 002 of 2026 SENA)' : 'Acuerdo 009 de 2024 (Modificado por Acuerdo 002 de 2026 SENA)'}</span>
           <button
             onClick={onClose}
             className="px-4 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors cursor-pointer"
           >
-            Cerrar
+            {lang === 'en' ? 'Close' : 'Cerrar'}
           </button>
         </div>
 

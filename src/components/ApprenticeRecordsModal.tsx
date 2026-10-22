@@ -37,6 +37,7 @@ interface ApprenticeRecordsModalProps {
   onAddRecord?: (record: ApprenticeRecord) => void;
   onResetRecords?: () => void;
   currentFicha: string;
+  lang?: 'es' | 'en';
 }
 
 export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
@@ -45,6 +46,7 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
   records,
   onResetRecords,
   currentFicha,
+  lang = 'es',
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'Todos' | 'Aprobado y Certificado' | 'Pendiente Evaluación'>('Todos');
@@ -250,14 +252,16 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                  Consolidado y Registro de Aprendices
+                  {lang === 'en' ? 'Consolidated Learner Directory & Records' : 'Consolidado y Registro de Aprendices'}
                 </h3>
                 <span className="text-[11px] px-2 py-0.5 rounded-md font-semibold bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300">
-                  Ficha {currentFicha || '2874910'}
+                  {lang === 'en' ? 'Batch' : 'Ficha'} {currentFicha || '2874910'}
                 </span>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Descarga el informe en archivo compatible con Excel y Google Drive sin requerir permisos externos
+                {lang === 'en'
+                  ? 'Download report compatible with Excel and Google Drive without external login'
+                  : 'Descarga el informe en archivo compatible con Excel y Google Drive sin requerir permisos externos'}
               </p>
             </div>
           </div>
@@ -278,19 +282,19 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
           {/* Summary Metric Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
             <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200/80 dark:border-slate-700/80">
-              <span className="text-slate-500 dark:text-slate-400 block font-medium">Total Aprendices</span>
+              <span className="text-slate-500 dark:text-slate-400 block font-medium">{lang === 'en' ? 'Total Learners' : 'Total Aprendices'}</span>
               <span className="text-xl font-bold text-slate-900 dark:text-white font-mono mt-0.5 block">{totalCount}</span>
             </div>
             <div className="p-3 bg-emerald-50/70 dark:bg-emerald-950/40 rounded-xl border border-emerald-200/70 dark:border-emerald-800/60">
-              <span className="text-emerald-700 dark:text-emerald-400 block font-medium">Aprobados y Certificados</span>
+              <span className="text-emerald-700 dark:text-emerald-400 block font-medium">{lang === 'en' ? 'Passed & Certified' : 'Aprobados y Certificados'}</span>
               <span className="text-xl font-bold text-emerald-800 dark:text-emerald-300 font-mono mt-0.5 block">{certifiedCount}</span>
             </div>
             <div className="p-3 bg-amber-50/70 dark:bg-amber-950/40 rounded-xl border border-amber-200/70 dark:border-amber-800/60">
-              <span className="text-amber-700 dark:text-amber-400 block font-medium">En Proceso / Pendientes</span>
+              <span className="text-amber-700 dark:text-amber-400 block font-medium">{lang === 'en' ? 'In Progress / Pending' : 'En Proceso / Pendientes'}</span>
               <span className="text-xl font-bold text-amber-800 dark:text-amber-300 font-mono mt-0.5 block">{inProgressCount}</span>
             </div>
             <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200/80 dark:border-slate-700/80">
-              <span className="text-slate-500 dark:text-slate-400 block font-medium">Promedio Calificación</span>
+              <span className="text-slate-500 dark:text-slate-400 block font-medium">{lang === 'en' ? 'Average Score' : 'Promedio Calificación'}</span>
               <span className="text-xl font-bold text-slate-900 dark:text-white font-mono mt-0.5 block">{averageScore}%</span>
             </div>
           </div>
@@ -306,7 +310,7 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Buscar por aprendiz o documento..."
+                  placeholder={lang === 'en' ? 'Search by learner or document...' : 'Buscar por aprendiz o documento...'}
                   className="w-full pl-9 pr-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-xs text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600"
                 />
               </div>
@@ -316,9 +320,9 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
                 onChange={(e) => setStatusFilter(e.target.value as any)}
                 className="px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 cursor-pointer"
               >
-                <option value="Todos">Todos los estados</option>
-                <option value="Aprobado y Certificado">Aprobados</option>
-                <option value="Pendiente Evaluación">Pendientes</option>
+                <option value="Todos">{lang === 'en' ? 'All statuses' : 'Todos los estados'}</option>
+                <option value="Aprobado y Certificado">{lang === 'en' ? 'Passed' : 'Aprobados'}</option>
+                <option value="Pendiente Evaluación">{lang === 'en' ? 'Pending' : 'Pendientes'}</option>
               </select>
             </div>
 
@@ -328,17 +332,17 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
                 type="button"
                 onClick={handleCopyForSheets}
                 className="px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
-                title="Copiar datos tabulados para pegar directamente en Google Sheets o Excel con Ctrl+V"
+                title={lang === 'en' ? 'Copy tab-separated data to paste into Google Sheets or Excel with Ctrl+V' : 'Copiar datos tabulados para pegar directamente en Google Sheets o Excel con Ctrl+V'}
               >
                 {copied ? (
                   <>
                     <Check className="w-3.5 h-3.5 text-emerald-600" />
-                    <span className="text-emerald-700 dark:text-emerald-400">¡Copiado para Sheets!</span>
+                    <span className="text-emerald-700 dark:text-emerald-400">{lang === 'en' ? 'Copied for Sheets!' : '¡Copiado para Sheets!'}</span>
                   </>
                 ) : (
                   <>
                     <Copy className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
-                    <span>Copiar para Sheets / Excel</span>
+                    <span>{lang === 'en' ? 'Copy for Sheets / Excel' : 'Copiar para Sheets / Excel'}</span>
                   </>
                 )}
               </button>
@@ -348,27 +352,27 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-3 py-2 text-xs font-medium text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
-                title="Abre una nueva Hoja de Cálculo en Google Drive lista para pegar (Ctrl+V)"
+                title={lang === 'en' ? 'Opens a new Google Sheet ready to paste (Ctrl+V)' : 'Abre una nueva Hoja de Cálculo en Google Drive lista para pegar (Ctrl+V)'}
               >
                 <ExternalLink className="w-3.5 h-3.5" />
-                <span>Abrir Google Sheets (sheets.new)</span>
+                <span>{lang === 'en' ? 'Open Google Sheets (sheets.new)' : 'Abrir Google Sheets (sheets.new)'}</span>
               </a>
 
               <button
                 type="button"
                 onClick={handleExportCSV}
                 className="px-4 py-2 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg transition-colors flex items-center gap-2 cursor-pointer shadow-xs"
-                title="Descargar archivo .CSV con formato UTF-8 listo para abrir en Excel o Google Drive"
+                title={lang === 'en' ? 'Download .CSV file UTF-8 formatted' : 'Descargar archivo .CSV con formato UTF-8 listo para abrir en Excel o Google Drive'}
               >
                 {downloadSuccess ? (
                   <>
                     <Check className="w-4 h-4 text-emerald-200" />
-                    <span>¡Descargado!</span>
+                    <span>{lang === 'en' ? 'Downloaded!' : '¡Descargado!'}</span>
                   </>
                 ) : (
                   <>
                     <Download className="w-4 h-4" />
-                    <span>Descargar Archivo CSV</span>
+                    <span>{lang === 'en' ? 'Download CSV File' : 'Descargar Archivo CSV'}</span>
                   </>
                 )}
               </button>
@@ -385,10 +389,12 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
                 </div>
                 <div>
                   <span className="font-bold text-slate-900 dark:text-white block text-xs">
-                    Sincronización Automática con Google Sheets
+                    {lang === 'en' ? 'Automatic Google Sheets Synchronization' : 'Sincronización Automática con Google Sheets'}
                   </span>
                   <span className="text-[11px] text-slate-500 dark:text-slate-400">
-                    Inserta cada aprendiz automáticamente en tu hoja de Drive al certificarse (sin pedir login al estudiante)
+                    {lang === 'en'
+                      ? 'Inserts each learner automatically into your Drive sheet upon certification (no login needed for students)'
+                      : 'Inserta cada aprendiz automáticamente en tu hoja de Drive al certificarse (sin pedir login al estudiante)'}
                   </span>
                 </div>
               </div>
@@ -400,7 +406,7 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
                   className="px-2.5 py-1 text-[11px] font-medium text-emerald-800 dark:text-emerald-300 bg-white dark:bg-slate-900 border border-emerald-300 dark:border-emerald-800/80 rounded-md hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-1 cursor-pointer"
                 >
                   <Code className="w-3 h-3" />
-                  <span>{showScriptGuide ? 'Ocultar Guía' : 'Ver Guía de Conexión en 1 min'}</span>
+                  <span>{showScriptGuide ? (lang === 'en' ? 'Hide Guide' : 'Ocultar Guía') : (lang === 'en' ? 'View 1-min Connection Guide' : 'Ver Guía de Conexión en 1 min')}</span>
                 </button>
               </div>
             </div>
@@ -409,9 +415,9 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
                 <label className="font-semibold text-slate-800 dark:text-slate-200 block text-[11px] mb-1 flex items-center justify-between">
-                  <span>URL Webhook de tu Hoja (Google Apps Script):</span>
+                  <span>{lang === 'en' ? 'Sheet Webhook URL (Google Apps Script):' : 'URL Webhook de tu Hoja (Google Apps Script):'}</span>
                   {webhookUrl && (
-                    <span className="text-[10px] text-emerald-800 dark:text-emerald-400 font-normal">● Configurado</span>
+                    <span className="text-[10px] text-emerald-800 dark:text-emerald-400 font-normal">● {lang === 'en' ? 'Configured' : 'Configurado'}</span>
                   )}
                 </label>
                 <div className="flex gap-1.5">
@@ -427,21 +433,21 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
                     disabled={isTestingWebhook}
                     onClick={handleTestWebhook}
                     className="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white rounded-md font-semibold text-xs transition-colors flex items-center gap-1 shrink-0 cursor-pointer"
-                    title="Envía una fila de prueba a tu Google Sheet para comprobar que responde"
+                    title={lang === 'en' ? 'Send a test row to your Google Sheet to verify' : 'Envía una fila de prueba a tu Google Sheet para comprobar que responde'}
                   >
                     {isTestingWebhook ? (
                       <RefreshCw className="w-3 h-3 animate-spin" />
                     ) : (
                       <Send className="w-3 h-3" />
                     )}
-                    <span>Probar Envío</span>
+                    <span>{isTestingWebhook ? (lang === 'en' ? 'Testing...' : 'Probando...') : (lang === 'en' ? 'Test Send' : 'Probar Envío')}</span>
                   </button>
                 </div>
               </div>
 
               <div>
                 <label className="font-semibold text-slate-800 dark:text-slate-200 block text-[11px] mb-1">
-                  Enlace para Abrir tu Hoja en Google Drive:
+                  {lang === 'en' ? 'Link to Open your Sheet in Google Drive:' : 'Enlace para Abrir tu Hoja en Google Drive:'}
                 </label>
                 <div className="flex gap-1.5">
                   <input
@@ -459,7 +465,7 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
                       className="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white rounded-md font-semibold flex items-center gap-1 text-xs transition-colors shrink-0"
                     >
                       <ExternalLink className="w-3 h-3" />
-                      <span>Abrir Hoja</span>
+                      <span>{lang === 'en' ? 'Open Sheet' : 'Abrir Hoja'}</span>
                     </a>
                   )}
                 </div>
@@ -484,7 +490,7 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
                     <HelpCircle className="w-3.5 h-3.5 text-emerald-700" />
-                    Pasos sencillos para conectar tu Google Sheet en 1 minuto:
+                    {lang === 'en' ? 'Easy steps to connect your Google Sheet in 1 minute:' : 'Pasos sencillos para conectar tu Google Sheet en 1 minuto:'}
                   </span>
                   <button
                     type="button"
@@ -492,17 +498,17 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
                     className="px-2.5 py-1 bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 rounded font-semibold text-[11px] flex items-center gap-1 hover:bg-emerald-100 transition-colors cursor-pointer"
                   >
                     {copiedScript ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-                    <span>{copiedScript ? '¡Código Copiado!' : 'Copiar Código de Google Apps Script'}</span>
+                    <span>{copiedScript ? (lang === 'en' ? 'Code Copied!' : '¡Código Copiado!') : (lang === 'en' ? 'Copy Google Apps Script Code' : 'Copiar Código de Google Apps Script')}</span>
                   </button>
                 </div>
 
                 <ol className="list-decimal list-inside space-y-1 text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed">
-                  <li>Abre tu Google Sheet (o crea uno nuevo con <a href="https://sheets.new" target="_blank" rel="noopener noreferrer" className="text-emerald-800 underline font-semibold">sheets.new</a>).</li>
-                  <li>En el menú superior de Google Sheets, ve a <strong>Extensiones &gt; Apps Script</strong>.</li>
-                  <li>Borra lo que haya y pega el código copiado con el botón de arriba.</li>
-                  <li>Haz clic en el botón azul superior <strong>Implementar &gt; Nueva implementación</strong>.</li>
-                  <li>Selecciona el tipo: <strong>Aplicación web</strong>. En <em>Quién tiene acceso</em>, elige: <strong>Cualquier usuario (Anyone)</strong>.</li>
-                  <li>Haz clic en <strong>Implementar</strong>, copia la <strong>URL de la aplicación web</strong> que te entrega Google y pégala en el campo <em>URL Webhook</em> aquí arriba. ¡Listo! A partir de ese momento cada estudiante que responda se registrará automáticamente sin que tú hagas nada más.</li>
+                  <li>{lang === 'en' ? 'Open your Google Sheet (or create one using sheets.new).' : 'Abre tu Google Sheet (o crea uno nuevo con sheets.new).'}</li>
+                  <li>{lang === 'en' ? 'In the top menu, go to Extensions > Apps Script.' : 'En el menú superior de Google Sheets, ve a Extensiones > Apps Script.'}</li>
+                  <li>{lang === 'en' ? 'Clear existing content and paste the code copied above.' : 'Borra lo que haya y pega el código copiado con el botón de arriba.'}</li>
+                  <li>{lang === 'en' ? 'Click Deploy > New deployment.' : 'Haz clic en el botón azul superior Implementar > Nueva implementación.'}</li>
+                  <li>{lang === 'en' ? 'Select Web app, and set Who has access to Anyone.' : 'Selecciona el tipo: Aplicación web. En Quién tiene acceso, elige: Cualquier usuario (Anyone).'}</li>
+                  <li>{lang === 'en' ? 'Click Deploy, copy the web app URL and paste it into the Webhook URL field above.' : 'Haz clic en Implementar, copia la URL de la aplicación web que te entrega Google y pégala en el campo URL Webhook aquí arriba.'}</li>
                 </ol>
               </div>
             )}
@@ -512,7 +518,10 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
           {/* Informational Guidance Badge */}
           <div className="text-[11px] text-slate-600 dark:text-slate-400 bg-emerald-50/50 dark:bg-emerald-950/20 p-2.5 rounded-lg border border-emerald-200/50 dark:border-emerald-800/40 flex flex-wrap items-center justify-between gap-2">
             <span>
-              💾 <strong>Doble Respaldo Activo:</strong> Los datos se guardan tanto en la memoria interna del sistema como en tu Webhook de Google Sheets si está configurado. También puedes descargar el archivo CSV o abrir con <a href="https://sheets.new" target="_blank" rel="noopener noreferrer" className="text-emerald-800 font-semibold underline">sheets.new</a> en cualquier momento.
+              💾 <strong>{lang === 'en' ? 'Dual Active Backup:' : 'Doble Respaldo Activo:'}</strong>{' '}
+              {lang === 'en'
+                ? 'Data is stored in local storage and sent to your Google Sheets webhook when set up. You can also download the CSV anytime.'
+                : 'Los datos se guardan tanto en la memoria interna del sistema como en tu Webhook de Google Sheets si está configurado. También puedes descargar el archivo CSV en cualquier momento.'}
             </span>
             {onResetRecords && (
               <button
@@ -520,7 +529,7 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
                 className="text-emerald-700 dark:text-emerald-400 hover:underline flex items-center gap-1 font-medium cursor-pointer shrink-0"
               >
                 <RefreshCw className="w-3 h-3" />
-                <span>Restablecer lista de muestra</span>
+                <span>{lang === 'en' ? 'Reset sample list' : 'Restablecer lista de muestra'}</span>
               </button>
             )}
           </div>
@@ -535,21 +544,21 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
                 <thead className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold border-b border-slate-200 dark:border-slate-700">
                   <tr>
                     <th className="px-4 py-3">#</th>
-                    <th className="px-4 py-3">Aprendiz</th>
-                    <th className="px-4 py-3">Identificación</th>
-                    <th className="px-4 py-3">Ficha / Programa</th>
-                    <th className="px-4 py-3 text-center">Módulos</th>
-                    <th className="px-4 py-3 text-center">Evaluación</th>
-                    <th className="px-4 py-3">Estado</th>
-                    <th className="px-4 py-3">Código Certificado</th>
-                    <th className="px-4 py-3">Fecha</th>
+                    <th className="px-4 py-3">{lang === 'en' ? 'Learner' : 'Aprendiz'}</th>
+                    <th className="px-4 py-3">{lang === 'en' ? 'ID Document' : 'Identificación'}</th>
+                    <th className="px-4 py-3">{lang === 'en' ? 'Batch / Program' : 'Ficha / Programa'}</th>
+                    <th className="px-4 py-3 text-center">{lang === 'en' ? 'Modules' : 'Módulos'}</th>
+                    <th className="px-4 py-3 text-center">{lang === 'en' ? 'Assessment' : 'Evaluación'}</th>
+                    <th className="px-4 py-3">{lang === 'en' ? 'Status' : 'Estado'}</th>
+                    <th className="px-4 py-3">{lang === 'en' ? 'Certificate Code' : 'Código Certificado'}</th>
+                    <th className="px-4 py-3">{lang === 'en' ? 'Date' : 'Fecha'}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
                   {filteredRecords.length === 0 ? (
                     <tr>
                       <td colSpan={9} className="px-4 py-8 text-center text-slate-400 dark:text-slate-500 italic">
-                        No se encontraron aprendices con el criterio de búsqueda.
+                        {lang === 'en' ? 'No learners found matching this search criteria.' : 'No se encontraron aprendices con el criterio de búsqueda.'}
                       </td>
                     </tr>
                   ) : (
@@ -590,12 +599,12 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
                           {r.hasPassedQuiz ? (
                             <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
                               <CheckCircle2 className="w-3.5 h-3.5" />
-                              <span>Certificado</span>
+                              <span>{lang === 'en' ? 'Certified' : 'Certificado'}</span>
                             </span>
                           ) : (
                             <span className="inline-flex items-center gap-1 text-[11px] font-medium text-amber-600 dark:text-amber-400">
                               <Clock className="w-3.5 h-3.5" />
-                              <span>En Proceso</span>
+                              <span>{lang === 'en' ? 'In Progress' : 'En Proceso'}</span>
                             </span>
                           )}
                         </td>
@@ -616,12 +625,12 @@ export const ApprenticeRecordsModal: React.FC<ApprenticeRecordsModalProps> = ({
 
         {/* Modal Footer */}
         <div className="px-6 py-3.5 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 shrink-0">
-          <span>Mostrando {filteredRecords.length} de {records.length} aprendices registrados</span>
+          <span>{lang === 'en' ? `Showing ${filteredRecords.length} of ${records.length} registered learners` : `Mostrando ${filteredRecords.length} de ${records.length} aprendices registrados`}</span>
           <button
             onClick={onClose}
             className="px-4 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors cursor-pointer"
           >
-            Cerrar
+            {lang === 'en' ? 'Close' : 'Cerrar'}
           </button>
         </div>
 

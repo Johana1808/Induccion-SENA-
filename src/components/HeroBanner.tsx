@@ -1,6 +1,7 @@
 import React from 'react';
 import { Compass, Sparkles, CheckCircle2, Share2, Users, FileSpreadsheet } from 'lucide-react';
 import { ApprenticeProfile } from '../data/inductionContent';
+import { t } from '../utils/i18n';
 
 interface HeroBannerProps {
   profile: ApprenticeProfile;
@@ -18,6 +19,7 @@ interface HeroBannerProps {
   onOpenCertificate: () => void;
   onOpenShareModal?: () => void;
   onOpenRecordsModal?: () => void;
+  lang?: 'es' | 'en';
 }
 
 export const HeroBanner: React.FC<HeroBannerProps> = ({
@@ -36,6 +38,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
   onOpenCertificate,
   onOpenShareModal,
   onOpenRecordsModal,
+  lang = 'es',
 }) => {
   const overallProgress = Math.round(
     ((completedModulesCount / totalModulesCount) * 0.4 +
@@ -54,29 +57,29 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             
             {/* Unboxed Metadata (Zero-pill discipline) */}
             <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
-              <span className="text-emerald-700 dark:text-emerald-400 font-semibold tracking-wide">SENA Colombia</span>
+              <span className="text-emerald-700 dark:text-emerald-400 font-semibold tracking-wide">{t[lang].heroSenaCol}</span>
               <span aria-hidden="true">·</span>
-              <span>Acuerdo 009 de 2024 (Modificado por Acuerdo 002 de 2026)</span>
+              <span>{t[lang].subtitle}</span>
               <span aria-hidden="true">·</span>
-              <span>Reglamento Vigente</span>
+              <span>{t[lang].heroCurrentRule}</span>
               <span aria-hidden="true">·</span>
-              <span>Inducción Integral</span>
+              <span>{t[lang].heroIntegralInduction}</span>
             </div>
 
             {/* Headline with text-wrap: balance */}
             <div>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight" style={{ textWrap: 'balance' }}>
-                Bienvenido al SENA: Conoce tus Derechos, Deberes y Conquista tu Certificación
+                {t[lang].heroWelcomeTitle}
               </h1>
               <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-                Hola, <strong className="text-slate-900 dark:text-white font-semibold">{profile.fullName}</strong>. Estás matriculado en <span className="text-emerald-800 dark:text-emerald-400 font-semibold">{profile.programName}</span> ({profile.fichaCode ? `Ficha ${profile.fichaCode}` : 'Inducción General'}). Esta plataforma gamificada te guía paso a paso por el reglamento del aprendiz vigente (Acuerdo 009 de 2024 modificado por el Acuerdo 002 de 2026), te enfrenta a casos reales y evalúa tus competencias para expedir tu certificado oficial de inducción.
+                {t[lang].heroWelcomeMsg1} <strong className="text-slate-900 dark:text-white font-semibold">{profile.fullName}</strong>. {t[lang].heroWelcomeMsg2} <span className="text-emerald-800 dark:text-emerald-400 font-semibold">{profile.programName}</span> ({profile.fichaCode ? `${lang === 'en' ? 'Batch' : 'Ficha'} ${profile.fichaCode}` : (lang === 'en' ? 'General Induction' : 'Inducción General')}). {t[lang].heroWelcomeMsg3}
               </p>
             </div>
 
             {/* Progress summary bar */}
             <div className="p-4 bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/80 rounded-xl space-y-3">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-slate-700 dark:text-slate-200">Progreso General de la Inducción</span>
+                <span className="font-semibold text-slate-700 dark:text-slate-200">{t[lang].overallProgress}</span>
                 <span className="font-mono tabular-nums font-bold text-emerald-700 dark:text-emerald-400 text-sm">
                   {overallProgress}%
                 </span>
@@ -92,19 +95,19 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                   <span className="block font-mono font-semibold text-slate-800 dark:text-slate-100 tabular-nums">
                     {completedModulesCount}/{totalModulesCount}
                   </span>
-                  <span>Módulos</span>
+                  <span>{t[lang].modules}</span>
                 </div>
                 <div>
                   <span className="block font-mono font-semibold text-slate-800 dark:text-slate-100 tabular-nums">
                     {dilemmasSolvedCount}/{totalDilemmasCount}
                   </span>
-                  <span>Casos Resueltos</span>
+                  <span>{t[lang].casesSolved}</span>
                 </div>
                 <div>
                   <span className="block font-mono font-semibold text-slate-800 dark:text-slate-100 tabular-nums">
-                    {hasPassedQuiz ? '100% Aprobado' : quizScore !== null ? `${quizScore}%` : 'Pendiente'}
+                    {hasPassedQuiz ? t[lang].evaluationPassed : quizScore !== null ? `${quizScore}%` : t[lang].evaluationPending}
                   </span>
-                  <span>Evaluación</span>
+                  <span>{t[lang].evaluationLabel}</span>
                 </div>
               </div>
             </div>
@@ -119,7 +122,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                       className="px-5 py-2.5 text-xs sm:text-sm font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg transition-colors whitespace-nowrap cursor-pointer shadow-xs flex items-center gap-2"
                     >
                       <Sparkles className="w-4 h-4 text-emerald-200" />
-                      <span>Panel de Gestión del Instructor</span>
+                      <span>{t[lang].instructorManagementPanel}</span>
                     </button>
                   )}
 
@@ -127,10 +130,10 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                     <button
                       onClick={onOpenShareModal}
                       className="px-4 py-2.5 text-xs sm:text-sm font-semibold text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700/80 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition-colors whitespace-nowrap cursor-pointer flex items-center gap-2 shadow-xs"
-                      title="Generar enlace oficial para enviar a los aprendices"
+                      title={t[lang].shareLinkToLearners}
                     >
                       <Share2 className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-                      <span>Compartir Link a Aprendices</span>
+                      <span>{t[lang].shareLinkToLearners}</span>
                     </button>
                   )}
 
@@ -138,10 +141,10 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                     <button
                       onClick={onOpenRecordsModal}
                       className="px-4 py-2.5 text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors whitespace-nowrap cursor-pointer flex items-center gap-2 shadow-xs"
-                      title="Ver registros consolidados de aprendices y exportar en Excel o CSV para Google Drive"
+                      title={t[lang].consolidatedExport}
                     >
                       <FileSpreadsheet className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-                      <span>Consolidado (Excel/CSV)</span>
+                      <span>{t[lang].consolidatedExport}</span>
                     </button>
                   )}
 
@@ -150,7 +153,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                     className="px-4 py-2.5 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors whitespace-nowrap cursor-pointer flex items-center gap-2"
                   >
                     <Compass className="w-4 h-4" />
-                    <span>Ver Módulos de Inducción</span>
+                    <span>{t[lang].viewInductionModules}</span>
                   </button>
                 </>
               ) : (
@@ -161,7 +164,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                     className="px-5 py-2.5 text-xs sm:text-sm font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg transition-colors whitespace-nowrap cursor-pointer shadow-xs flex items-center gap-2"
                   >
                     <Compass className="w-4 h-4" />
-                    <span>Continuar Módulos</span>
+                    <span>{t[lang].continueModules}</span>
                   </button>
 
                   <button
@@ -169,7 +172,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                     className="px-4 py-2.5 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors whitespace-nowrap cursor-pointer flex items-center gap-2"
                   >
                     <Sparkles className="w-4 h-4 text-amber-500" />
-                    <span>Evaluación Gamificada</span>
+                    <span>{t[lang].gamifiedEvaluation}</span>
                   </button>
 
                   {hasPassedQuiz && (
@@ -178,7 +181,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                       className="px-4 py-2.5 text-xs sm:text-sm font-semibold text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition-colors whitespace-nowrap cursor-pointer flex items-center gap-2"
                     >
                       <CheckCircle2 className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-                      <span>Descargar Mi Certificado</span>
+                      <span>{t[lang].downloadCertBtn}</span>
                     </button>
                   )}
                 </>
@@ -198,13 +201,13 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent flex flex-col justify-end p-5 text-white">
                 <p className="text-xs font-semibold text-emerald-300 uppercase tracking-wider">
-                  Comunidad SENA
+                  {t[lang].communityTitle}
                 </p>
                 <p className="text-sm font-medium text-slate-100 leading-snug mt-1">
-                  Formación técnica con sentido humano, ético y de servicio al país.
+                  {t[lang].communitySubtitle}
                 </p>
                 <div className="mt-2 flex items-center gap-3 text-xs text-slate-300 font-mono">
-                  <span>{totalXp} Puntos XP</span>
+                  <span>{totalXp} {t[lang].xpPoints}</span>
                   <span>·</span>
                   <span>{profile.regional}</span>
                 </div>

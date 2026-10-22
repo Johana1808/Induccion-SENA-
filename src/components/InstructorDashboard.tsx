@@ -31,6 +31,7 @@ import {
   getStoredSheetUrl,
   setStoredSheetUrl
 } from '../services/sheetSyncService';
+import { t } from '../utils/i18n';
 
 interface InstructorDashboardProps {
   records: ApprenticeRecord[];
@@ -39,6 +40,7 @@ interface InstructorDashboardProps {
   onSwitchToLearnerView: () => void;
   onResetRecords?: () => void;
   onOpenShareModal: () => void;
+  lang?: 'es' | 'en';
 }
 
 export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
@@ -48,6 +50,7 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
   onSwitchToLearnerView,
   onResetRecords,
   onOpenShareModal,
+  lang = 'es',
 }) => {
   // Filters & Search
   const [searchQuery, setSearchQuery] = useState('');
@@ -109,7 +112,9 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
   };
 
   const handleWhatsAppShare = () => {
-    const message = `Estimados aprendices SENA, les comparto el enlace oficial para realizar la inducción interactiva al Reglamento del Aprendiz (Acuerdo 009 de 2024 modificado por el Acuerdo 002 de 2026). Al completar los módulos y aprobar la evaluación, obtendrán su certificado oficial a su nombre:\n\n${studentInviteUrl}`;
+    const message = lang === 'en'
+      ? `Dear SENA learners, here is the official link to complete the interactive Apprentice Rulebook induction (Agreement 009 of 2024 modified by Agreement 002 of 2026). Upon completing the modules and passing the assessment, you will obtain your official certificate under your name:\n\n${studentInviteUrl}`
+      : `Estimados aprendices SENA, les comparto el enlace oficial para realizar la inducción interactiva al Reglamento del Aprendiz (Acuerdo 009 de 2024 modificado por el Acuerdo 002 de 2026). Al completar los módulos y aprobar la evaluación, obtendrán su certificado oficial a su nombre:\n\n${studentInviteUrl}`;
     const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -277,18 +282,20 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
-              Perfil Exclusivo de Instructor
+              {lang === 'en' ? 'Exclusive Instructor Profile' : 'Perfil Exclusivo de Instructor'}
             </span>
             <span className="text-xs text-slate-400">·</span>
             <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-              Ficha {currentProfile.fichaCode || '2874910'} · {currentProfile.programName}
+              {lang === 'en' ? 'Batch' : 'Ficha'} {currentProfile.fichaCode || '2874910'} · {currentProfile.programName}
             </span>
           </div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-            Panel de Control y Seguimiento de Aprendices
+            {t[lang].instructorPanelTitle}
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-3xl leading-relaxed">
-            Desde este panel privado puedes configurar la sincronización automática con Google Sheets, generar el enlace exclusivo para que tus estudiantes hagan la inducción sin acceso a la configuración, y monitorear sus calificaciones y certificados.
+            {lang === 'en'
+              ? 'From this private dashboard you can configure automatic Google Sheets synchronization, generate an exclusive link for learners to take induction without settings access, and monitor grades and certificates.'
+              : 'Desde este panel privado puedes configurar la sincronización automática con Google Sheets, generar el enlace exclusivo para que tus estudiantes hagan la inducción sin acceso a la configuración, y monitorear sus calificaciones y certificados.'}
           </p>
         </div>
 
@@ -296,10 +303,10 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
           <button
             onClick={onSwitchToLearnerView}
             className="px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl transition-colors flex items-center gap-2 cursor-pointer shadow-xs"
-            title="Ver la plataforma exactamente como la ven tus estudiantes"
+            title={lang === 'en' ? 'View platform exactly as your students see it' : 'Ver la plataforma exactamente como la ven tus estudiantes'}
           >
             <Eye className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            <span>Ver Modo Aprendiz</span>
+            <span>{t[lang].learnerView}</span>
           </button>
 
           <button
@@ -307,7 +314,7 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
             className="px-4 py-2 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-xl transition-colors flex items-center gap-2 cursor-pointer shadow-xs"
           >
             <Share2 className="w-4 h-4" />
-            <span>Compartir a Aprendices</span>
+            <span>{t[lang].shareToLearners}</span>
           </button>
         </div>
       </div>
@@ -316,48 +323,48 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Total Aprendices</span>
+            <span className="text-xs font-medium text-slate-500 dark:text-slate-400">{t[lang].statTotalLearners}</span>
             <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center">
               <Users className="w-4 h-4" />
             </div>
           </div>
           <p className="text-3xl font-bold font-mono text-slate-900 dark:text-white mt-2">{totalCount}</p>
-          <span className="text-[11px] text-slate-400 mt-1 block">Registrados en la ficha</span>
+          <span className="text-[11px] text-slate-400 mt-1 block">{lang === 'en' ? 'Enrolled in batch' : 'Registrados en la ficha'}</span>
         </div>
 
         <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-emerald-200/80 dark:border-emerald-900/60 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-emerald-800 dark:text-emerald-400">Certificados Oficiales</span>
+            <span className="text-xs font-medium text-emerald-800 dark:text-emerald-400">{t[lang].statCertified}</span>
             <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
               <Award className="w-4 h-4" />
             </div>
           </div>
           <p className="text-3xl font-bold font-mono text-emerald-800 dark:text-emerald-300 mt-2">{certifiedCount}</p>
           <span className="text-[11px] text-emerald-600 dark:text-emerald-400 mt-1 block font-medium">
-            {totalCount > 0 ? `${Math.round((certifiedCount / totalCount) * 100)}% de aprobación` : '0%'}
+            {totalCount > 0 ? `${Math.round((certifiedCount / totalCount) * 100)}% ${lang === 'en' ? 'pass rate' : 'de aprobación'}` : '0%'}
           </span>
         </div>
 
         <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-amber-200/80 dark:border-amber-900/60 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-amber-800 dark:text-amber-400">En Proceso / Pendientes</span>
+            <span className="text-xs font-medium text-amber-800 dark:text-amber-400">{t[lang].statInProgress}</span>
             <div className="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 flex items-center justify-center">
               <Clock className="w-4 h-4" />
             </div>
           </div>
           <p className="text-3xl font-bold font-mono text-amber-800 dark:text-amber-300 mt-2">{inProgressCount}</p>
-          <span className="text-[11px] text-amber-600 dark:text-amber-400 mt-1 block">Completando módulos</span>
+          <span className="text-[11px] text-amber-600 dark:text-amber-400 mt-1 block">{lang === 'en' ? 'Completing modules' : 'Completando módulos'}</span>
         </div>
 
         <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Promedio General</span>
+            <span className="text-xs font-medium text-slate-500 dark:text-slate-400">{t[lang].statAvgScore}</span>
             <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center">
               <CheckCircle2 className="w-4 h-4" />
             </div>
           </div>
           <p className="text-3xl font-bold font-mono text-slate-900 dark:text-white mt-2">{averageScore}%</p>
-          <span className="text-[11px] text-slate-400 mt-1 block">Calificación de evaluación</span>
+          <span className="text-[11px] text-slate-400 mt-1 block">{lang === 'en' ? 'Assessment average' : 'Calificación de evaluación'}</span>
         </div>
       </div>
 
@@ -373,21 +380,21 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
                   <Share2 className="w-4 h-4" />
                 </div>
                 <h2 className="text-base font-bold text-slate-900 dark:text-white">
-                  Enlace Oficial para los Aprendices
+                  {t[lang].instructorCardLinkTitle}
                 </h2>
               </div>
               <span className="text-[11px] px-2 py-0.5 rounded-full font-semibold bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200">
-                Rol Aprendiz Seguro
+                {t[lang].roleSecureBadge}
               </span>
             </div>
             
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-              Comparte este enlace a tus aprendices por WhatsApp, correo o Teams. Al abrirlo, <strong>solo verán la inducción, la evaluación y su propio certificado</strong>. No tendrán acceso a este panel de instructor ni a la configuración de hojas de cálculo.
+              {t[lang].instructorCardLinkDesc}
             </p>
 
             <div className="mt-4 p-3 bg-slate-50 dark:bg-slate-800/80 rounded-xl border border-slate-200 dark:border-slate-700">
               <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 block mb-1">
-                URL generada para la Ficha {currentProfile.fichaCode || '2874910'}:
+                {t[lang].urlGeneratedFor} {currentProfile.fichaCode || '2874910'}:
               </span>
               <p className="text-xs font-mono text-emerald-800 dark:text-emerald-400 break-all select-all py-1 bg-white dark:bg-slate-900 px-2.5 rounded border border-slate-200 dark:border-slate-700">
                 {studentInviteUrl}
@@ -401,20 +408,20 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
               className="flex-1 min-w-[180px] px-4 py-2.5 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
             >
               {copiedLink ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-              <span>{copiedLink ? '¡Enlace de Aprendices Copiado!' : 'Copiar Enlace para Aprendices'}</span>
+              <span>{copiedLink ? t[lang].learnerLinkCopiedBtn : t[lang].copyLearnerLinkBtn}</span>
             </button>
 
             <button
               onClick={handleWhatsAppShare}
               className="px-4 py-2.5 text-xs font-semibold text-emerald-900 dark:text-emerald-200 bg-emerald-100 hover:bg-emerald-200 dark:bg-emerald-950/80 dark:hover:bg-emerald-900 rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
             >
-              <span>Enviar por WhatsApp</span>
+              <span>{t[lang].sendWhatsappBtn}</span>
             </button>
 
             <button
               onClick={onOpenShareModal}
               className="px-3 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-xl transition-colors flex items-center justify-center gap-1 cursor-pointer"
-              title="Más opciones de personalización y código QR"
+              title={lang === 'en' ? 'More customization options and QR code' : 'Más opciones de personalización y código QR'}
             >
               <QrCode className="w-4 h-4" />
             </button>
@@ -430,7 +437,7 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
                   <Zap className="w-4 h-4" />
                 </div>
                 <h2 className="text-base font-bold text-slate-900 dark:text-white">
-                  Sincronización Automática con Google Sheets
+                  {t[lang].sheetsSyncCardTitle}
                 </h2>
               </div>
               <span className={`text-[11px] px-2 py-0.5 rounded-full font-semibold ${
@@ -438,18 +445,18 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
                   ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' 
                   : 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300'
               }`}>
-                {webhookUrl ? '● Sincronización Activa' : '○ Webhook Pendiente'}
+                {webhookUrl ? t[lang].syncActiveBadge : t[lang].syncPendingBadge}
               </span>
             </div>
 
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-              Conecta tu Google Sheet mediante Google Apps Script. Cada vez que un aprendiz apruebe la inducción, su fila se insertará automáticamente en tu hoja de Google Drive en segundo plano.
+              {t[lang].sheetsSyncCardDesc}
             </p>
 
             <div className="mt-3 space-y-2">
               <div>
                 <label className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 block mb-1">
-                  URL Webhook de tu Hoja de Google Sheets:
+                  {t[lang].webhookInputLabel}
                 </label>
                 <div className="flex gap-1.5">
                   <input
@@ -464,14 +471,14 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
                     disabled={isTestingWebhook}
                     onClick={handleTestWebhook}
                     className="px-3.5 py-1.5 bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white rounded-lg font-semibold text-xs transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer shadow-xs"
-                    title="Envía una fila de prueba para comprobar que tu hoja recibe los datos"
+                    title={lang === 'en' ? 'Send a test row to verify sheet connection' : 'Envía una fila de prueba para comprobar que tu hoja recibe los datos'}
                   >
                     {isTestingWebhook ? (
                       <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                     ) : (
                       <Send className="w-3.5 h-3.5" />
                     )}
-                    <span>Probar Envío</span>
+                    <span>{isTestingWebhook ? t[lang].testingWebhook : t[lang].testSendBtn}</span>
                   </button>
                 </div>
               </div>
@@ -496,7 +503,7 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
               className="px-3 py-1.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 rounded-lg hover:bg-emerald-100 transition-colors flex items-center gap-1 cursor-pointer"
             >
               <Code className="w-3.5 h-3.5" />
-              <span>{showScriptGuide ? 'Ocultar Guía' : 'Ver Guía de Conexión en 1 min'}</span>
+              <span>{showScriptGuide ? t[lang].hideGuideBtn : t[lang].showGuideBtn}</span>
             </button>
 
             <a
@@ -506,7 +513,7 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
               className="px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
             >
               <ExternalLink className="w-3.5 h-3.5" />
-              <span>Crear Hoja (sheets.new)</span>
+              <span>{t[lang].createSheetBtn}</span>
             </a>
 
             {customSheetUrl && customSheetUrl.startsWith('http') && (
@@ -517,7 +524,7 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
                 className="px-3 py-1.5 text-xs font-semibold text-white bg-slate-800 hover:bg-slate-900 rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
               >
                 <FileSpreadsheet className="w-3.5 h-3.5" />
-                <span>Abrir mi Hoja de Drive</span>
+                <span>{t[lang].openDriveSheetBtn}</span>
               </a>
             )}
           </div>
@@ -527,7 +534,7 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
               <div className="flex items-center justify-between">
                 <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1">
                   <HelpCircle className="w-3.5 h-3.5 text-emerald-700" />
-                  Instrucciones en 4 pasos:
+                  {t[lang].guideInstructionsTitle}
                 </span>
                 <button
                   type="button"
@@ -535,14 +542,14 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
                   className="px-2.5 py-1 bg-white dark:bg-slate-900 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 rounded font-semibold text-[11px] flex items-center gap-1 cursor-pointer"
                 >
                   {copiedScript ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-                  <span>{copiedScript ? '¡Copiado!' : 'Copiar Código de Apps Script'}</span>
+                  <span>{copiedScript ? t[lang].scriptCopiedBtn : t[lang].copyScriptCodeBtn}</span>
                 </button>
               </div>
               <ol className="list-decimal list-inside space-y-1 text-slate-600 dark:text-slate-300 text-[11px]">
-                <li>Abre tu Google Sheet en Google Drive.</li>
-                <li>Ve a <strong>Extensiones &gt; Apps Script</strong> y borra todo el contenido.</li>
-                <li>Pega el código copiado con el botón de arriba.</li>
-                <li>Haz clic en <strong>Implementar &gt; Nueva implementación</strong>, tipo <strong>Aplicación web</strong>, acceso: <strong>Cualquier usuario</strong>. Copia la URL generada y pégala aquí.</li>
+                <li>{t[lang].step1}</li>
+                <li>{t[lang].step2}</li>
+                <li>{t[lang].step3}</li>
+                <li>{t[lang].step4}</li>
               </ol>
             </div>
           )}
@@ -558,10 +565,10 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
           <div>
             <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <FileSpreadsheet className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
-              Consolidado de Aprendices en Tiempo Real
+              {t[lang].liveLedgerTitle}
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              Visualiza en vivo el progreso, puntajes y códigos de certificación generados por los aprendices.
+              {t[lang].liveLedgerDesc}
             </p>
           </div>
 
@@ -569,19 +576,19 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
             <button
               onClick={handleCopyForSheets}
               className="px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
-              title="Copiar datos tabulados para pegar directamente en cualquier Google Sheet o Excel con Ctrl+V"
+              title={lang === 'en' ? 'Copy tab-separated data to paste directly into Google Sheets or Excel with Ctrl+V' : 'Copiar datos tabulados para pegar directamente en cualquier Google Sheet o Excel con Ctrl+V'}
             >
               {copiedTable ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4 text-slate-500" />}
-              <span>{copiedTable ? '¡Copiado para Sheets!' : 'Copiar para Sheets / Excel'}</span>
+              <span>{copiedTable ? t[lang].copiedForSheetsBtn : t[lang].copyForSheetsBtn}</span>
             </button>
 
             <button
               onClick={handleExportCSV}
               className="px-4 py-2 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-xl transition-colors flex items-center gap-2 cursor-pointer shadow-xs"
-              title="Descargar archivo .CSV con formato UTF-8 compatible con Microsoft Excel y Google Drive"
+              title={lang === 'en' ? 'Download .CSV file with UTF-8 format compatible with Microsoft Excel and Google Drive' : 'Descargar archivo .CSV con formato UTF-8 compatible con Microsoft Excel y Google Drive'}
             >
               {downloadSuccess ? <Check className="w-4 h-4 text-emerald-200" /> : <Download className="w-4 h-4" />}
-              <span>{downloadSuccess ? '¡Archivo Descargado!' : 'Descargar Archivo CSV'}</span>
+              <span>{downloadSuccess ? t[lang].csvDownloadedBtn : t[lang].downloadCsvBtn}</span>
             </button>
           </div>
         </div>
@@ -595,7 +602,7 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Buscar aprendiz por nombre, documento o certificado..."
+                placeholder={t[lang].searchLearner}
                 className="w-full pl-9 pr-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-600"
               />
             </div>
@@ -605,21 +612,21 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
               onChange={(e) => setStatusFilter(e.target.value as any)}
               className="px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 cursor-pointer"
             >
-              <option value="Todos">Todos los estados ({totalCount})</option>
-              <option value="Aprobado y Certificado">Aprobados y Certificados ({certifiedCount})</option>
-              <option value="Pendiente Evaluación">En Proceso / Pendientes ({inProgressCount})</option>
+              <option value="Todos">{t[lang].allStatusesOption} ({totalCount})</option>
+              <option value="Aprobado y Certificado">{t[lang].approvedAndCertifiedOption} ({certifiedCount})</option>
+              <option value="Pendiente Evaluación">{t[lang].pendingEvaluationOption} ({inProgressCount})</option>
             </select>
           </div>
 
           <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400 text-xs">
-            <span>Mostrando <strong>{filteredRecords.length}</strong> de {records.length} aprendices</span>
+            <span>{t[lang].showingCount} <strong>{filteredRecords.length}</strong> {t[lang].ofCount} {records.length} {t[lang].learnersCount}</span>
             {onResetRecords && (
               <button
                 onClick={onResetRecords}
                 className="text-emerald-700 dark:text-emerald-400 hover:underline flex items-center gap-1 font-medium cursor-pointer"
               >
                 <RefreshCw className="w-3 h-3" />
-                <span>Restablecer datos muestra</span>
+                <span>{t[lang].resetSampleDataBtn}</span>
               </button>
             )}
           </div>
@@ -630,22 +637,22 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
           <table className="w-full text-left text-xs">
             <thead className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold border-b border-slate-200 dark:border-slate-700">
               <tr>
-                <th className="px-4 py-3">#</th>
-                <th className="px-4 py-3">Aprendiz</th>
-                <th className="px-4 py-3">Documento</th>
-                <th className="px-4 py-3">Ficha / Programa</th>
-                <th className="px-4 py-3 text-center">Módulos</th>
-                <th className="px-4 py-3 text-center">Evaluación</th>
-                <th className="px-4 py-3">Estado</th>
-                <th className="px-4 py-3">Código Certificado</th>
-                <th className="px-4 py-3">Fecha Registro</th>
+                <th className="px-4 py-3">{t[lang].tableColNumber}</th>
+                <th className="px-4 py-3">{t[lang].tableColLearner}</th>
+                <th className="px-4 py-3">{t[lang].tableColDoc}</th>
+                <th className="px-4 py-3">{t[lang].tableColFichaProgram}</th>
+                <th className="px-4 py-3 text-center">{t[lang].tableColModules}</th>
+                <th className="px-4 py-3 text-center">{t[lang].tableColQuiz}</th>
+                <th className="px-4 py-3">{t[lang].tableColStatus}</th>
+                <th className="px-4 py-3">{t[lang].tableColCertCode}</th>
+                <th className="px-4 py-3">{t[lang].tableColRegDate}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
               {filteredRecords.length === 0 ? (
                 <tr>
                   <td colSpan={9} className="px-4 py-8 text-center text-slate-400 dark:text-slate-500 italic">
-                    No se encontraron aprendices con ese criterio de búsqueda.
+                    {t[lang].noLearnersFoundText}
                   </td>
                 </tr>
               ) : (
@@ -686,12 +693,12 @@ export const InstructorDashboard: React.FC<InstructorDashboardProps> = ({
                       {r.hasPassedQuiz ? (
                         <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
                           <CheckCircle2 className="w-3.5 h-3.5" />
-                          <span>Certificado</span>
+                          <span>{t[lang].statusCertifiedLabel}</span>
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 text-[11px] font-medium text-amber-600 dark:text-amber-400">
                           <Clock className="w-3.5 h-3.5" />
-                          <span>En Proceso</span>
+                          <span>{t[lang].statusInProgressLabel}</span>
                         </span>
                       )}
                     </td>

@@ -812,3 +812,636 @@ export const BADGES_LIST: Badge[] = [
     unlockedAtXp: 1600
   }
 ];
+
+export const INDUCTION_MODULES_EN: InductionModule[] = [
+  {
+    id: 'mod-1',
+    number: 1,
+    title: 'SENA Identity and Apprentice Welfare',
+    shortDesc: 'Institutional mission, Integrity Code values, and comprehensive apprentice support programs.',
+    readingTime: '5 min',
+    xpReward: 150,
+    coverTopic: 'SENA as Colombia’s most cherished tripartite entity',
+    sections: [
+      {
+        title: 'Mission and Nature of Comprehensive Vocational Training',
+        content: [
+          'The National Learning Service (SENA) is tasked with fulfilling the State’s responsibility to invest in the technical and social development of Colombian workers, delivering comprehensive vocational training.',
+          'Training at SENA aims not only to teach technical skills, but to educate well-rounded, ethical citizens dedicated to the country\'s social and economic transformation.'
+        ],
+        highlights: [
+          'Tuition-free training without intermediaries',
+          'Competency-based training and learning outcome focus',
+          'Core values: Honesty, Respect, Commitment, Diligence, and Justice'
+        ],
+        legalReference: 'Law 119 of 1994 and Agreement 009 of 2024, General Principles'
+      },
+      {
+        title: 'Apprentice Welfare Services',
+        content: [
+          'The National Apprentice Welfare Plan is a guaranteed right supporting learners throughout their educational journey across various dimensions:',
+          '1. Healthcare, prevention, and emotional wellbeing.',
+          '2. Arts, sports, culture, and recreation in training centers.',
+          '3. Leadership, academic tutoring, and entrepreneurship support.',
+          '4. Financial support stipends (Regular, FIC) for learners facing socioeconomic challenges.'
+        ],
+        highlights: [
+          'Open calls for paid academic peer-tutoring',
+          'Psychosocial support promoting well-being',
+          'Inclusive education with zero discrimination'
+        ],
+        legalReference: 'Agreement 009 of 2024, Art. 5 Item 6'
+      }
+    ],
+    quickCheck: {
+      question: 'What is the core purpose of Comprehensive Vocational Training at SENA?',
+      options: [
+        'Only issuing fast certificates without ethical fundamentals',
+        'Developing technical and human competencies for productive work and citizenship',
+        'Replacing university education in an exclusionary manner',
+        'Charging tuition fees based on socioeconomic stratum'
+      ],
+      correctIndex: 1,
+      explanation: 'SENA Comprehensive Vocational Training blends technical know-how with human values, strengthening personal and civic growth tuition-free.'
+    }
+  },
+  {
+    id: 'mod-2',
+    number: 2,
+    title: 'Apprentice Rights (Agreement 009 of 2024)',
+    shortDesc: 'Know your rights, due process guarantees, access to technological environments, and training freedom.',
+    readingTime: '7 min',
+    xpReward: 200,
+    coverTopic: 'Article 5: Fundamental guarantees for SENA apprentices',
+    sections: [
+      {
+        title: 'Academic and Educational Rights',
+        content: [
+          'The Apprentice Rulebook (Agreement 009 of 2024) protects your guarantees from induction through the productive stage:',
+          '• Receive a thorough institutional induction on the rulebook, curriculum, and LMS platform (Zajuna / SofíaPlus).',
+          '• Freely access and utilize training environments, labs, workshops, computers, and library resources.',
+          '• Timely receive personal protective equipment (PPE) and biosafety gear when required.',
+          '• Be evaluated objectively with transparent, formative feedback.'
+        ],
+        highlights: [
+          'Evaluation and feedback within 8 working days following delivery',
+          'Right to request an appeal before an impartial second instructor',
+          'Right to pedagogical improvement plans before disciplinary actions'
+        ],
+        legalReference: 'Agreement 009 of 2024, Art. 5 (Apprentice Rights)'
+      },
+      {
+        title: 'Rights to Coexistence, Participation and Inclusion',
+        content: [
+          '• Be treated with dignity, equality, and respect by directors, instructors, administrative staff, and peers.',
+          '• Request and receive reasonable accommodations for disability or specific educational needs.',
+          '• Elect and be elected as batch spokesperson or center apprentice representative.',
+          '• Due process in any disciplinary procedure, including the right to be heard and appeal decisions.'
+        ],
+        highlights: [
+          'Zero tolerance for harassment, discrimination, or bullying',
+          'Formal grievance channels and Coexistence Committee support',
+          'Freedom of expression grounded in mutual respect'
+        ],
+        legalReference: 'Agreement 009 of 2024, Art. 5 Items 8 to 16'
+      }
+    ],
+    quickCheck: {
+      question: 'According to Agreement 009 of 2024, what is the deadline for an instructor to publish learning evidence feedback?',
+      options: [
+        'Within 8 working days following evidence submission',
+        'Until the end of the quarter without notice',
+        '30 calendar days depending on center workload',
+        'Anytime before graduation'
+      ],
+      correctIndex: 0,
+      explanation: 'Agreement 009 of 2024 mandates that evaluations must be recorded and shared within 8 working days with formative feedback.'
+    }
+  },
+  {
+    id: 'mod-3',
+    number: 3,
+    title: 'Apprentice Duties and Training Responsibility',
+    shortDesc: 'Academic commitments, conduct standards, punctuality, ID badge wearing, and environmental stewardship.',
+    readingTime: '6 min',
+    xpReward: 200,
+    coverTopic: 'Article 6: Ethical, academic, and civic commitments',
+    sections: [
+      {
+        title: 'Academic Duties and Digital Environments',
+        content: [
+          'Training at SENA demands dedication and self-directed learning:',
+          '• Attend all scheduled activities promptly on time (in-person or virtual).',
+          '• Develop learning evidence autonomously, honestly, individually or collaboratively as guided.',
+          '• Keep personal data updated in institutional systems (SofíaPlus, Zajuna, APE).',
+          '• Justify absences within 3 working days with valid documentary evidence (medical, work, or force majeure).'
+        ],
+        highlights: [
+          'Strict 3-working-day window to justify absences with valid documentation',
+          'Responsible use of institutional accounts (@sena.edu.co)',
+          'Strict adherence to schedule and project milestones'
+        ],
+        legalReference: 'Agreement 009 of 2024, Art. 6 (Apprentice Duties)'
+      },
+      {
+        title: 'Disciplinary Duties, Safety, and Environment',
+        content: [
+          '• Visibly wear the institutional ID badge at all times in SENA facilities and official events.',
+          '• Wear the required technical uniform with decorum and respect for Occupational Health and Safety (OHS) standards.',
+          '• Take care of machinery, simulators, furniture, and training center infrastructure.',
+          '• Comply with the Center Environmental Management Plan (waste sorting, water and energy saving).'
+        ],
+        highlights: [
+          'Mandatory visible wearing of institutional ID badge',
+          'Compulsory PPE in workshops and labs',
+          'Protection and respect for green areas and public resources'
+        ],
+        legalReference: 'Agreement 009 of 2024, Art. 6 Items 7 to 18'
+      }
+    ],
+    quickCheck: {
+      question: 'If an apprentice misses classes due to a medical emergency, how long do they have to submit proof?',
+      options: [
+        'Within 3 working days following the event',
+        'Until the end of the school year',
+        'No need to justify if notified via chat to a classmate',
+        '15 working days after returning'
+      ],
+      correctIndex: 0,
+      explanation: 'The rulebook establishes a 3-working-day deadline to formally file an absence justification with valid support.'
+    }
+  },
+  {
+    id: 'mod-4',
+    number: 4,
+    title: 'Prohibitions, Infractions and Formative Measures',
+    shortDesc: 'Forbidden conduct, classification of infractions, due process, and Evaluation Committee.',
+    readingTime: '7 min',
+    xpReward: 250,
+    coverTopic: 'Disciplinary regime and pedagogical measures',
+    sections: [
+      {
+        title: 'Express Prohibitions at SENA',
+        content: [
+          'To ensure physical safety and harmonious coexistence, the rulebook strictly prohibits:',
+          '1. Plagiarizing materials, homework, code, or third-party research claiming it as one’s own.',
+          '2. Exam fraud or impersonating another apprentice in classes or attendance registers.',
+          '3. Carrying weapons, entering with or consuming drugs or alcohol at SENA facilities.',
+          '4. Engaging in institutional political or religious proselytism that coerces the training community.',
+          '5. Any behavior involving sexual harassment, cyberbullying, gender violence, or discrimination.'
+        ],
+        highlights: [
+          'Plagiarism and academic fraud result in immediate Committee investigation',
+          'Zero tolerance for weapons, alcohol, and drugs at SENA facilities',
+          'Strict prohibition against intimidation and harassment'
+        ],
+        legalReference: 'Agreement 009 of 2024, Art. 7 (Prohibitions)'
+      },
+      {
+        title: 'Formative Measures, Sanctions and Due Process (Art. 48 modified by Agreement 002 of 2026)',
+        content: [
+          'SENA prioritizes formative and pedagogical solutions before punitive measures:',
+          '• Formative Measures: Reflective verbal reprimands, written pedagogical commitments, and agreed improvement plans.',
+          '• Sanctions: Written formal warnings in personal file, conditional enrollment, or enrollment cancellation (with 6 to 24 months suspension).',
+          '• Due Process Guarantees (Art. 48 reformed by Agreement 002 of 2026): Two distinct teams operate to guarantee impartiality: a technical team to investigate and document evidence, and the Evaluation and Monitoring Committee to deliberate.',
+          '• Active Student Representation: The apprentice batch spokesperson or center representative actively participates in Committee deliberations to advocate for learner rights.'
+        ],
+        highlights: [
+          'Reformed Art. 48 (Agreement 002 of 2026): Separation of technical investigation from decision bodies',
+          'Key participation of student representatives in disciplinary committees',
+          'Full guarantee of the right to defense, evidence rebuttal, and appeal'
+        ],
+        legalReference: 'Agreement 009 of 2024 and Agreement 002 of 2026 (Modified Art. 48)'
+      }
+    ],
+    quickCheck: {
+      question: 'What is an Improvement Plan according to the Apprentice Rulebook?',
+      options: [
+        'A financial fine deducted from transportation subsidies',
+        'A pedagogical formative measure agreed to overcome learning deficiencies',
+        'Automatic expulsion without hearing',
+        'A surprise pop quiz'
+      ],
+      correctIndex: 1,
+      explanation: 'An Improvement Plan is a pedagogical agreement between the instructor and apprentice to achieve pending learning outcomes.'
+    }
+  },
+  {
+    id: 'mod-5',
+    number: 5,
+    title: 'Productive Stage, Enrollment Changes and Graduation',
+    shortDesc: 'Productive stage alternatives, managing enrollment status, and certification requirements.',
+    readingTime: '6 min',
+    xpReward: 200,
+    coverTopic: 'Bridge to the labor market and official credentialing',
+    sections: [
+      {
+        title: 'Options for Completing the Productive Stage',
+        content: [
+          'Training at SENA consists of two phases: Schooling and Productive. For practical experience, apprentices may choose several recognized pathways:',
+          '1. Apprenticeship Contract (Contrato de Aprendizaje): Special training contract with monthly company stipend and health/work hazard insurance.',
+          '2. Productive Project (Fondo Emprender / SENA Emprende Rural): Developing one\'s own business model.',
+          '3. Employment Contract: Working in job functions directly related to the study program profile.',
+          '4. Internships (Pasantías) in public entities, NGOs, or academic tutoring at SENA.'
+        ],
+        highlights: [
+          'All alternatives require prior approval from the Academic Coordination',
+          'Regular monitoring with biweekly logs and instructor visits',
+          'Maximum duration of 6 months for technician and technologist programs'
+        ],
+        legalReference: 'Agreement 009 of 2024, Productive Stage Regime'
+      },
+      {
+        title: 'Enrollment Status Changes and Certification Requirements',
+        content: [
+          'Apprentices can formally request enrollment changes in SofíaPlus:',
+          '• Postponement of enrollment (up to 6 months for justified reasons).',
+          '• Transfer of Center or shift schedule (subject to slot availability).',
+          '• Voluntary withdrawal properly filed before incurring in dropout status.',
+          'To graduate, you must achieve 100% "Approved" competency judgments, complete the productive stage, clear all institutional debts, and take national state exams (Saber TyT/Pro) if applicable.'
+        ],
+        highlights: [
+          'Preventing dropout: 3 consecutive unexcused absence days triggers dropout proceedings',
+          'Comprehensive clearance (library, equipment inventory, welfare, academics)',
+          'Free issuance of Technologist or Labor Technician degree certificate'
+        ],
+        legalReference: 'Agreement 009 of 2024, Enrollment Changes and Certification'
+      }
+    ],
+    quickCheck: {
+      question: 'What occurs if an apprentice misses training for 3 consecutive working days without submitting any valid excuse?',
+      options: [
+        'All evidence is automatically passed',
+        'The regulatory procedure for presumed dropout is initiated',
+        'The national ID card is revoked',
+        'The student is automatically switched to night virtual classes'
+      ],
+      correctIndex: 1,
+      explanation: 'The rulebook specifies that 3 consecutive unexcused absence days or 10% of total term hours triggers dropout proceedings.'
+    }
+  }
+];
+
+export const CASE_DILEMMAS_EN: CaseDilemma[] = [
+  {
+    id: 'case-1',
+    title: 'The Collaborative Project and "Copy-Paste"',
+    category: 'Deberes',
+    context: 'Teamwork in Curricular Execution Phase',
+    scenario: 'Your project team has a submission deadline tomorrow at 11:59 p.m. A teammate suggests copying a technical document from the internet without citing sources to "save time", claiming "the instructor has too much work to notice". What decision do you make?',
+    options: [
+      {
+        text: 'Accept the suggestion to avoid friction and submit on time.',
+        isOptimal: false,
+        consequence: 'You would commit plagiarism, classified as a serious offense under Agreement 009 of 2024. The whole team could face an Evaluation Committee with potential conditional enrollment.',
+        articleReference: 'Art. 7 Item 1 (Prohibition of Plagiarism and Fraud)',
+        points: 0
+      },
+      {
+        text: 'Refuse to plagiarize, properly cite consulted sources following standards, and submit original team work.',
+        isOptimal: true,
+        consequence: 'Excellent ethical choice! You uphold intellectual honesty, ensure the validity of your evidence, and protect the integrity of your training.',
+        articleReference: 'Art. 6 (Academic Honesty Duty) and Art. 7 (Plagiarism Ban)',
+        points: 100
+      },
+      {
+        text: 'Let the teammate upload the plagiarized work and omit your name from the cover to distance yourself.',
+        isOptimal: false,
+        consequence: 'You evade collaborative responsibility and fail to help your peer avoid a sanctionable breach. As a team member, you must foster collective ethics.',
+        articleReference: 'Art. 6 Item 2 (Responsibility in Team Activities)',
+        points: 30
+      }
+    ]
+  },
+  {
+    id: 'case-2',
+    title: 'Family Emergency and Documentation Deadline',
+    category: 'Deberes',
+    context: 'Absence justification and notification management',
+    scenario: 'Carlos had to travel urgently due to a severe medical emergency with his grandmother, missing Monday, Tuesday, and Wednesday of in-person training. He returns on Thursday morning. How should he proceed according to the rulebook?',
+    options: [
+      {
+        text: 'Submit the justification with medical documentation to the instructor and coordination before 3 working days elapse.',
+        isOptimal: true,
+        consequence: 'Correct! Filing proof promptly within 3 working days allows Carlos to reschedule learning evidence without being reported for dropout.',
+        articleReference: 'Art. 6 (Absence Justification within 3 working days)',
+        points: 100
+      },
+      {
+        text: 'Wait until the end of the term to mention it to the instructor during final grading.',
+        isOptimal: false,
+        consequence: 'The regulatory deadline will have expired and the absence will be marked as unexcused, which may trigger a dropout process.',
+        articleReference: 'Chapter on Non-attendance and Dropout',
+        points: 0
+      },
+      {
+        text: 'Ask a friend to sign the attendance roll on his behalf while he is away.',
+        isOptimal: false,
+        consequence: 'This constitutes identity fraud and false records, which is a very serious disciplinary offense for both Carlos and his accomplice.',
+        articleReference: 'Art. 7 (Prohibition of Impersonation and Falsification)',
+        points: 0
+      }
+    ]
+  },
+  {
+    id: 'case-3',
+    title: 'Discrepancy in Grading of Learning Evidence',
+    category: 'Derechos',
+    context: 'Learning Assessment and Due Process',
+    scenario: 'Laura delivered her lab assignment on time meeting all rubric criteria. However, she received an "Unapproved" grade without feedback and the instructor does not answer questions. Laura is confident her work meets requirements.',
+    options: [
+      {
+        text: 'Insult the instructor in the course WhatsApp group and call for a strike.',
+        isOptimal: false,
+        consequence: 'This constitutes a serious disciplinary offense for disrespect and disruption, losing the legal validity of the academic claim.',
+        articleReference: 'Art. 6 & 7 (Coexistence and Institutional Channels)',
+        points: 0
+      },
+      {
+        text: 'Politely request written formal feedback and, if disagreement persists, formally ask Coordination for review by a second instructor.',
+        isOptimal: true,
+        consequence: 'Excellent exercise of your rights! Agreement 009 guarantees the right to clear feedback and to request an impartial second evaluator when technical controversy exists.',
+        articleReference: 'Art. 5 Item 13 (Right to Review and Second Evaluator)',
+        points: 100
+      },
+      {
+        text: 'Give up and pay someone else to make a new assignment.',
+        isOptimal: false,
+        consequence: 'Paying for academic assignments violates SENA ethics and abandons your rights to evaluation due process.',
+        articleReference: 'Art. 5 & 6 (Comprehensive Training and Honesty)',
+        points: 10
+      }
+    ]
+  },
+  {
+    id: 'case-4',
+    title: 'Workshop Safety and Mandatory PPE',
+    category: 'Prohibiciones',
+    context: 'Occupational Health and Safety (OHS)',
+    scenario: 'In a mechanical workshop, it is very hot and an apprentice decides to take off safety glasses and gloves and roll up his sleeves near an industrial milling machine to feel cooler.',
+    options: [
+      {
+        text: 'Let him work like that because everyone is free and responsible for their own body.',
+        isOptimal: false,
+        consequence: 'Puts physical safety at grave risk. OHS regulations at SENA are strictly mandatory.',
+        articleReference: 'Art. 6 (Duty of PPE Usage and Self-care in Workshops)',
+        points: 0
+      },
+      {
+        text: 'Warn him that wearing PPE is mandatory and non-negotiable, and if unheeded, report to instructor or OHS delegate to stop work for safety.',
+        isOptimal: true,
+        consequence: 'Exemplary care and co-responsibility! At SENA, protecting life and following safety protocols saves lives.',
+        articleReference: 'Art. 6 Item 10 & Art. 7 (Biosafety and OHS Rules)',
+        points: 100
+      },
+      {
+        text: 'Take a picture of him and post it on social media with mocking captions.',
+        isOptimal: false,
+        consequence: 'Violates the right to privacy and commits cyber harassment, constituting a disciplinary infraction.',
+        articleReference: 'Art. 7 (Prohibition of Harassment and Bullying)',
+        points: 0
+      }
+    ]
+  },
+  {
+    id: 'case-5',
+    title: 'Choosing a Productive Stage Pathway',
+    category: 'Etapa Productiva',
+    context: 'Transition from Schooling Stage to Practical Experience',
+    scenario: 'Andrés is finishing his schooling phase. A company offers him a paid apprenticeship contract, but he also has an innovative tech startup idea that could apply for Fondo Emprender. What should he know?',
+    options: [
+      {
+        text: 'Only Apprenticeship Contracts are valid; other modalities are not recognized by SENA.',
+        isOptimal: false,
+        consequence: 'Incorrect info: SENA recognizes multiple modalities including Productive Projects, Internships, Employment, and Tutoring.',
+        articleReference: 'Productive Stage Chapter, Agreement 009 of 2024',
+        points: 10
+      },
+      {
+        text: 'He can consult with the Center\'s Corporate Relations and Entrepreneurship team to evaluate which option fits his life plan and register it properly.',
+        isOptimal: true,
+        consequence: 'Perfect! Apprentices have the right to choose among approved regulatory pathways with institutional guidance to guarantee graduation.',
+        articleReference: 'Productive Stage Chapter (Selection Alternatives)',
+        points: 100
+      },
+      {
+        text: 'Sign the apprenticeship contract and simultaneously start the startup project without telling anyone.',
+        isOptimal: false,
+        consequence: 'Two simultaneous active productive stage modalities cannot be registered for the same program batch.',
+        articleReference: 'SENA Productive Stage Registration Rules',
+        points: 0
+      }
+    ]
+  }
+];
+
+export const ASSESSMENT_QUESTIONS_EN: QuizQuestion[] = [
+  {
+    id: 1,
+    category: 'General Regulations',
+    question: 'What is the current regulatory framework governing apprentice rights, duties, and due process at SENA?',
+    options: [
+      'Agreement 009 of 2024 with amendments by Agreement 002 of 2026',
+      'Agreement 007 of 2012 (unmodified)',
+      'Resolution 100 of 1990',
+      'National Police Code only'
+    ],
+    correctIndex: 0,
+    explanation: 'The current regulatory framework consists of Agreement 009 of 2024 and its latest modification issued under Agreement 002 of 2026 by the SENA National Governing Board.',
+    article: 'Agreement 009 of 2024 & Agreement 002 of 2026'
+  },
+  {
+    id: 2,
+    category: 'Apprentice Rights',
+    question: 'If you disagree with an evaluation grade given on a learning evidence, what right assists you?',
+    options: [
+      'Blocking access to the training center',
+      'Requesting written review from the instructor and, if controversy persists, appointment of an impartial second evaluator',
+      'Demanding immediate dismissal of the instructor',
+      'Editing the grade directly in the database'
+    ],
+    correctIndex: 1,
+    explanation: 'Article 5 guarantees the right to objective evaluation review and an impartial second evaluator if justified controversy persists.',
+    article: 'Art. 5, Apprentice Rights'
+  },
+  {
+    id: 3,
+    category: 'Apprentice Duties',
+    question: 'What is the stipulated deadline to submit medical or force majeure proof for an absence?',
+    options: [
+      'Within 3 working days following return or event',
+      'Up to 30 calendar days later',
+      'At the graduation ceremony',
+      'There is no deadline'
+    ],
+    correctIndex: 0,
+    explanation: 'The mandatory deadline is 3 working days to formally file medical leaves or valid justifications.',
+    article: 'Art. 6, Attendance and Justifications'
+  },
+  {
+    id: 4,
+    category: 'Prohibitions',
+    question: 'Which of the following behaviors is expressly FORBIDDEN within SENA environments under Agreement 009?',
+    options: [
+      'Participating in Sennova research incubators',
+      'Political or religious proselytism and acts of discrimination or harassment',
+      'Borrowing technical books in the library',
+      'Running for batch spokesperson'
+    ],
+    correctIndex: 1,
+    explanation: 'Agreement 009 strictly prohibits political or religious proselytism and severely sanctions any form of discrimination or harassment.',
+    article: 'Art. 7, Express Prohibitions'
+  },
+  {
+    id: 5,
+    category: 'Formative Measures',
+    question: 'What is the fundamental difference between a Formative Measure and a Disciplinary Sanction?',
+    options: [
+      'There is no difference; they are identical terms',
+      'Formative measures are pedagogical and seek performance improvement; sanctions are corrective measures after Committee due process',
+      'Sanctions are paid by parents in cash',
+      'Formative measures involve preventative detention'
+    ],
+    correctIndex: 1,
+    explanation: 'Formative measures (verbal advice, improvement plans) are pedagogical; sanctions are formal corrective decisions decided by Committee.',
+    article: 'Chapter on Formative Measures and Sanctions'
+  },
+  {
+    id: 6,
+    category: 'Apprentice Rights',
+    question: 'What guarantee do apprentices with disabilities or special needs have under the new rulebook?',
+    options: [
+      'They cannot enroll in technical training',
+      'The right to request and receive reasonable accommodations in methodology, resources, and accessibility',
+      'They must hire their own private tutor',
+      'They can only take 2-week programs'
+    ],
+    correctIndex: 1,
+    explanation: 'Agreement 009 strengthens inclusion by expressly recognizing the right to reasonable accommodations to ensure equal opportunities.',
+    article: 'Art. 5, Inclusion and Reasonable Accommodations'
+  },
+  {
+    id: 7,
+    category: 'Productive Stage',
+    question: 'Which of the following is NOT a valid modality recognized by SENA for the Productive Stage?',
+    options: [
+      'Apprenticeship Contract (Contrato de Aprendizaje)',
+      'Productive Project or Fondo Emprender business',
+      'Internship or formal Employment related to the field of study',
+      'Informal unrelated labor without academic coordination approval'
+    ],
+    correctIndex: 3,
+    explanation: 'All productive stage modalities must be directly related to program competencies and have institutional endorsement and monitoring.',
+    article: 'Chapter on Productive Stage'
+  },
+  {
+    id: 8,
+    category: 'Coexistence and Symbols',
+    question: 'What duty does an apprentice have regarding their ID badge and institutional identity within the Center?',
+    options: [
+      'Wear it visibly at all times for security and community coexistence',
+      'Lend it to outside friends to let them enter',
+      'Leave it at home so it does not wear out',
+      'Modify the photo with digital filters before showing it'
+    ],
+    correctIndex: 0,
+    explanation: 'Visible wearing of the institutional ID badge is a regulatory duty protecting community safety across all SENA facilities.',
+    article: 'Art. 6, Institutional Duties'
+  },
+  {
+    id: 9,
+    category: 'Evaluation Committee and Due Process',
+    question: 'Under Article 48 modified by Agreement 002 of 2026, how is due process guaranteed before the Evaluation Committee?',
+    options: [
+      'Through two separate technical teams for review and investigation, plus active student representative participation',
+      'Through automatic sanctions without hearing defense or reviewing evidence',
+      'By delegating decisions to a private security firm',
+      'By expelling the learner before the hearing starts'
+    ],
+    correctIndex: 0,
+    explanation: 'Agreement 002 of 2026 reformed Article 48, establishing two distinct technical teams to document cases objectively, ensuring apprentice representation and due process.',
+    article: 'Art. 48 modified by Agreement 002 of 2026'
+  },
+  {
+    id: 10,
+    category: 'Certification',
+    question: 'To obtain official certification and your vocational degree at SENA, what is required?',
+    options: [
+      'Passing 100% of learning outcomes in schooling and productive stages, plus institutional clearance',
+      'Attending only 50% of theoretical classes',
+      'Paying a graduation fee at the administrative office',
+      'Winning all video game tournaments at the center'
+    ],
+    correctIndex: 0,
+    explanation: 'Degree certificates are free and awarded upon completing 100% of learning competencies for both stages and clearing all institutional obligations.',
+    article: 'Chapter on Certification and Degrees'
+  }
+];
+
+export const BADGES_LIST_EN: Badge[] = [
+  {
+    id: 'badge-1',
+    name: 'SENA Identity',
+    description: 'Completed Module 1 on Mission, Values, and Apprentice Welfare.',
+    iconName: 'Award',
+    unlockedAtXp: 150
+  },
+  {
+    id: 'badge-2',
+    name: 'Rights Defender',
+    description: 'Understood guarantees and rights under Article 5 of Agreement 009.',
+    iconName: 'ShieldCheck',
+    unlockedAtXp: 350
+  },
+  {
+    id: 'badge-3',
+    name: 'Exemplary Citizen',
+    description: 'Mastered ethical duties, punctuality, and educational responsibility.',
+    iconName: 'HeartHandshake',
+    unlockedAtXp: 550
+  },
+  {
+    id: 'badge-4',
+    name: 'Coexistence Leader',
+    description: 'Learned prohibitions, due process, and institutional culture of peace.',
+    iconName: 'Users',
+    unlockedAtXp: 800
+  },
+  {
+    id: 'badge-5',
+    name: 'Heading to Practice',
+    description: 'Mastered practical stage modalities and graduation requirements.',
+    iconName: 'Briefcase',
+    unlockedAtXp: 1000
+  },
+  {
+    id: 'badge-6',
+    name: 'Ethical Strategist',
+    description: 'Solved the 5 real apprentice dilemmas applying official regulations.',
+    iconName: 'Compass',
+    unlockedAtXp: 1300
+  },
+  {
+    id: 'badge-7',
+    name: 'Rulebook Master',
+    description: 'Passed the final assessment with honors (80%+). Certificate issued.',
+    iconName: 'GraduationCap',
+    unlockedAtXp: 1600
+  }
+];
+
+export const getInductionModules = (lang: 'es' | 'en' = 'es'): InductionModule[] => {
+  return lang === 'en' ? INDUCTION_MODULES_EN : INDUCTION_MODULES;
+};
+
+export const getCaseDilemmas = (lang: 'es' | 'en' = 'es'): CaseDilemma[] => {
+  return lang === 'en' ? CASE_DILEMMAS_EN : CASE_DILEMMAS;
+};
+
+export const getAssessmentQuestions = (lang: 'es' | 'en' = 'es'): QuizQuestion[] => {
+  return lang === 'en' ? ASSESSMENT_QUESTIONS_EN : ASSESSMENT_QUESTIONS;
+};
+
+export const getBadgesList = (lang: 'es' | 'en' = 'es'): Badge[] => {
+  return lang === 'en' ? BADGES_LIST_EN : BADGES_LIST;
+};

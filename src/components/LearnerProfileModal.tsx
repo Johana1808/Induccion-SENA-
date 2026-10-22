@@ -7,6 +7,7 @@ interface LearnerProfileModalProps {
   onClose: () => void;
   profile: ApprenticeProfile;
   onSaveProfile: (profile: ApprenticeProfile) => void;
+  lang?: 'es' | 'en';
 }
 
 export const LearnerProfileModal: React.FC<LearnerProfileModalProps> = ({
@@ -14,6 +15,7 @@ export const LearnerProfileModal: React.FC<LearnerProfileModalProps> = ({
   onClose,
   profile,
   onSaveProfile,
+  lang = 'es',
 }) => {
   const [formData, setFormData] = useState<ApprenticeProfile>({ ...profile });
 
@@ -37,10 +39,10 @@ export const LearnerProfileModal: React.FC<LearnerProfileModalProps> = ({
             </div>
             <div>
               <h3 className="text-base font-semibold text-slate-900 dark:text-white">
-                Ficha y Datos del Aprendiz
+                {lang === 'en' ? 'Learner Profile & Characterization' : 'Ficha y Datos del Aprendiz'}
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Información para la personalización de tu inducción y certificado
+                {lang === 'en' ? 'Information for customizing your induction and certificate' : 'Información para la personalización de tu inducción y certificado'}
               </p>
             </div>
           </div>
@@ -56,7 +58,7 @@ export const LearnerProfileModal: React.FC<LearnerProfileModalProps> = ({
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
             <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
-              Nombre Completo del Aprendiz
+              {lang === 'en' ? 'Apprentice Full Name *' : 'Nombre Completo del Aprendiz *'}
             </label>
             <div className="relative">
               <input
@@ -65,7 +67,7 @@ export const LearnerProfileModal: React.FC<LearnerProfileModalProps> = ({
                 value={formData.fullName}
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all"
-                placeholder="Ej. Juan Carlos Pérez Gómez"
+                placeholder={lang === 'en' ? 'E.g., Laura Sofia Gomez Rodriguez' : 'Ej. Juan Carlos Pérez Gómez'}
               />
             </div>
           </div>
@@ -73,22 +75,22 @@ export const LearnerProfileModal: React.FC<LearnerProfileModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
-                Tipo de Documento
+                {lang === 'en' ? 'Document Type' : 'Tipo de Documento'}
               </label>
               <select
                 value={formData.documentType}
                 onChange={(e) => setFormData({ ...formData, documentType: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all cursor-pointer"
               >
-                <option value="Cédula de Ciudadanía">Cédula de Ciudadanía (C.C.)</option>
-                <option value="Tarjeta de Identidad">Tarjeta de Identidad (T.I.)</option>
-                <option value="Cédula de Extranjería">Cédula de Extranjería (C.E.)</option>
-                <option value="Permiso por Protección Temporal">Permiso de Protección (PPT)</option>
+                <option value="Cédula de Ciudadanía">{lang === 'en' ? 'National ID (C.C.)' : 'Cédula de Ciudadanía (C.C.)'}</option>
+                <option value="Tarjeta de Identidad">{lang === 'en' ? 'Identity Card (T.I.)' : 'Tarjeta de Identidad (T.I.)'}</option>
+                <option value="Cédula de Extranjería">{lang === 'en' ? 'Foreigner ID (C.E.)' : 'Cédula de Extranjería (C.E.)'}</option>
+                <option value="Permiso por Protección Temporal">{lang === 'en' ? 'Temporary Protection Permit (PPT)' : 'Permiso de Protección (PPT)'}</option>
               </select>
             </div>
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
-                Número de Documento
+                {lang === 'en' ? 'Document Number *' : 'Número de Documento *'}
               </label>
               <input
                 type="text"
@@ -104,7 +106,7 @@ export const LearnerProfileModal: React.FC<LearnerProfileModalProps> = ({
           <div>
             <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
               <BookOpen className="w-3.5 h-3.5 text-slate-400" />
-              Programa de Formación
+              {lang === 'en' ? 'Training Program' : 'Programa de Formación'}
             </label>
             <input
               type="text"
@@ -112,7 +114,7 @@ export const LearnerProfileModal: React.FC<LearnerProfileModalProps> = ({
               value={formData.programName}
               onChange={(e) => setFormData({ ...formData, programName: e.target.value })}
               className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all"
-              placeholder="Ej. Tecnólogo en Análisis y Desarrollo de Software"
+              placeholder={lang === 'en' ? 'E.g., Software Analysis and Development' : 'Ej. Tecnólogo en Análisis y Desarrollo de Software'}
             />
           </div>
 
@@ -120,7 +122,7 @@ export const LearnerProfileModal: React.FC<LearnerProfileModalProps> = ({
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
                 <Hash className="w-3.5 h-3.5 text-slate-400" />
-                Número de Ficha
+                {lang === 'en' ? 'Batch Code (Ficha)' : 'Número de Ficha'}
               </label>
               <input
                 type="text"
@@ -133,16 +135,16 @@ export const LearnerProfileModal: React.FC<LearnerProfileModalProps> = ({
             </div>
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
-                Modalidad
+                {lang === 'en' ? 'Modality' : 'Modalidad'}
               </label>
               <select
                 value={formData.modality}
                 onChange={(e) => setFormData({ ...formData, modality: e.target.value as any })}
                 className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all cursor-pointer"
               >
-                <option value="Presencial">Presencial</option>
-                <option value="Virtual">Virtual (Zajuna)</option>
-                <option value="A Distancia">A Distancia / Mixta</option>
+                <option value="Presencial">{lang === 'en' ? 'In-person' : 'Presencial'}</option>
+                <option value="Virtual">{lang === 'en' ? 'Virtual (Zajuna)' : 'Virtual (Zajuna)'}</option>
+                <option value="A Distancia">{lang === 'en' ? 'Distance / Mixed' : 'A Distancia / Mixta'}</option>
               </select>
             </div>
           </div>
@@ -151,7 +153,7 @@ export const LearnerProfileModal: React.FC<LearnerProfileModalProps> = ({
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
                 <Building className="w-3.5 h-3.5 text-slate-400" />
-                Regional SENA
+                {lang === 'en' ? 'SENA Regional' : 'Regional SENA'}
               </label>
               <input
                 type="text"
@@ -159,12 +161,12 @@ export const LearnerProfileModal: React.FC<LearnerProfileModalProps> = ({
                 value={formData.regional}
                 onChange={(e) => setFormData({ ...formData, regional: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all"
-                placeholder="Ej. Regional Distrito Capital"
+                placeholder={lang === 'en' ? 'E.g., Capital District' : 'Ej. Regional Distrito Capital'}
               />
             </div>
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
-                Centro de Formación
+                {lang === 'en' ? 'Training Center' : 'Centro de Formación'}
               </label>
               <input
                 type="text"
@@ -172,7 +174,7 @@ export const LearnerProfileModal: React.FC<LearnerProfileModalProps> = ({
                 value={formData.trainingCenter}
                 onChange={(e) => setFormData({ ...formData, trainingCenter: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all"
-                placeholder="Ej. Centro de Electricidad y Telecomunicaciones"
+                placeholder={lang === 'en' ? 'E.g., Technology and Electricity Center' : 'Ej. Centro de Electricidad y Telecomunicaciones'}
               />
             </div>
           </div>
@@ -183,14 +185,14 @@ export const LearnerProfileModal: React.FC<LearnerProfileModalProps> = ({
               onClick={onClose}
               className="px-4 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors cursor-pointer"
             >
-              Cancelar
+              {lang === 'en' ? 'Cancel' : 'Cancelar'}
             </button>
             <button
               type="submit"
               className="px-4 py-2 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
             >
               <Check className="w-3.5 h-3.5" />
-              Guardar Datos
+              <span>{lang === 'en' ? 'Save Profile' : 'Guardar Datos'}</span>
             </button>
           </div>
         </form>

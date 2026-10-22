@@ -11,24 +11,28 @@ import {
   Sparkles,
   HelpCircle
 } from 'lucide-react';
-import { InductionModule, INDUCTION_MODULES } from '../data/inductionContent';
+import { InductionModule, getInductionModules } from '../data/inductionContent';
+import { t } from '../utils/i18n';
 
 interface ModuleViewerProps {
   completedModules: string[];
   onCompleteModule: (moduleId: string, xpGain: number) => void;
   onGoToDilemmas: () => void;
+  lang?: 'es' | 'en';
 }
 
 export const ModuleViewer: React.FC<ModuleViewerProps> = ({
   completedModules,
   onCompleteModule,
   onGoToDilemmas,
+  lang = 'es',
 }) => {
   const [activeModuleIndex, setActiveModuleIndex] = useState<number>(0);
   const [selectedQuickAnswer, setSelectedQuickAnswer] = useState<number | null>(null);
   const [quickCheckAnswered, setQuickCheckAnswered] = useState<boolean>(false);
 
-  const currentModule: InductionModule = INDUCTION_MODULES[activeModuleIndex];
+  const modulesList = getInductionModules(lang);
+  const currentModule: InductionModule = modulesList[activeModuleIndex] || modulesList[0];
   const isModuleCompleted = completedModules.includes(currentModule.id);
 
   const handleSelectAnswer = (index: number) => {
@@ -42,7 +46,7 @@ export const ModuleViewer: React.FC<ModuleViewerProps> = ({
   };
 
   const handleNextModule = () => {
-    if (activeModuleIndex < INDUCTION_MODULES.length - 1) {
+    if (activeModuleIndex < modulesList.length - 1) {
       setActiveModuleIndex(prev => prev + 1);
       setSelectedQuickAnswer(null);
       setQuickCheckAnswered(false);
@@ -68,16 +72,16 @@ export const ModuleViewer: React.FC<ModuleViewerProps> = ({
           <div className="flex items-center gap-2">
             <BookOpen className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
             <h2 className="text-sm font-bold text-slate-900 dark:text-white">
-              Ruta Formativa de Inducción (5 Módulos)
+              {t[lang].trainingRoute}
             </h2>
           </div>
           <div className="text-xs text-slate-500 dark:text-slate-400 font-mono">
-            {completedModules.length} de {INDUCTION_MODULES.length} aprobados
+            {completedModules.length} {lang === 'en' ? 'of' : 'de'} {modulesList.length} {t[lang].approvedOf}
           </div>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-          {INDUCTION_MODULES.map((mod, idx) => {
+          {modulesList.map((mod, idx) => {
             const isCompleted = completedModules.includes(mod.id);
             const isActive = idx === activeModuleIndex;
 
@@ -98,7 +102,7 @@ export const ModuleViewer: React.FC<ModuleViewerProps> = ({
                 }`}
               >
                 <div className="flex items-center justify-between text-xs mb-1">
-                  <span className="font-semibold">Módulo 0{mod.number}</span>
+                  <span className="font-semibold">{t[lang].moduleNumber} 0{mod.number}</span>
                   {isCompleted ? (
                     <CheckCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   ) : (
@@ -121,7 +125,7 @@ export const ModuleViewer: React.FC<ModuleViewerProps> = ({
         <div className="p-6 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40">
           <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
             <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-              <span className="font-semibold text-emerald-800 dark:text-emerald-400">Módulo 0{currentModule.number}</span>
+              <span className="font-semibold text-emerald-800 dark:text-emerald-400">{t[lang].moduleNumber} 0{currentModule.number}</span>
               <span aria-hidden="true">·</span>
               <span className="flex items-center gap-1">
                 <Clock className="w-3.5 h-3.5" />
@@ -137,7 +141,7 @@ export const ModuleViewer: React.FC<ModuleViewerProps> = ({
             {isModuleCompleted && (
               <span className="text-xs font-semibold text-emerald-800 dark:text-emerald-400 flex items-center gap-1.5">
                 <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                Módulo Completado
+                {t[lang].completed}
               </span>
             )}
           </div>
@@ -173,7 +177,7 @@ export const ModuleViewer: React.FC<ModuleViewerProps> = ({
               {sec.highlights && sec.highlights.length > 0 && (
                 <div className="p-4 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg space-y-2">
                   <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider block">
-                    Puntos Clave a Recordar:
+                    {t[lang].highlightsLabel}:
                   </span>
                   <ul className="space-y-1.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
                     {sec.highlights.map((h, hIdx) => (
@@ -190,7 +194,7 @@ export const ModuleViewer: React.FC<ModuleViewerProps> = ({
               {sec.legalReference && (
                 <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium pt-1">
                   <Scale className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
-                  <span>Fundamento Legal: <strong className="text-slate-700 dark:text-slate-200">{sec.legalReference}</strong></span>
+                  <span>{t[lang].legalReferenceLabel}: <strong className="text-slate-700 dark:text-slate-200">{sec.legalReference}</strong></span>
                 </div>
               )}
             </div>
@@ -202,7 +206,7 @@ export const ModuleViewer: React.FC<ModuleViewerProps> = ({
               <div className="flex items-center gap-2 text-emerald-900 dark:text-emerald-300">
                 <HelpCircle className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
                 <h4 className="text-sm font-bold">
-                  Comprobación Rápida de Comprensión
+                  {t[lang].quickCheckTitle}
                 </h4>
               </div>
               <span className="text-xs font-mono font-semibold text-emerald-800 dark:text-emerald-400">
@@ -254,8 +258,8 @@ export const ModuleViewer: React.FC<ModuleViewerProps> = ({
               }`}>
                 <p className="font-semibold mb-1">
                   {selectedQuickAnswer === currentModule.quickCheck.correctIndex
-                    ? '¡Respuesta Correcta! Has acreditado este módulo.'
-                    : 'Revisa la respuesta correcta:'}
+                    ? `${t[lang].correctAnswer} ${lang === 'en' ? 'You completed this module.' : 'Has acreditado este módulo.'}`
+                    : (lang === 'en' ? 'Review the correct answer:' : 'Revisa la respuesta correcta:')}
                 </p>
                 <p>{currentModule.quickCheck.explanation}</p>
               </div>
@@ -276,7 +280,7 @@ export const ModuleViewer: React.FC<ModuleViewerProps> = ({
             }`}
           >
             <ChevronLeft className="w-4 h-4" />
-            Módulo Anterior
+            {t[lang].prevModule}
           </button>
 
           <button
@@ -284,9 +288,9 @@ export const ModuleViewer: React.FC<ModuleViewerProps> = ({
             className="px-5 py-2 text-xs sm:text-sm font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
           >
             <span>
-              {activeModuleIndex < INDUCTION_MODULES.length - 1
-                ? 'Siguiente Módulo'
-                : 'Pasar a Dilemas Reales'}
+              {activeModuleIndex < modulesList.length - 1
+                ? t[lang].nextModule
+                : t[lang].goToDilemmas}
             </span>
             <ChevronRight className="w-4 h-4" />
           </button>

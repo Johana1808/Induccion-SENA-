@@ -10,10 +10,12 @@ import {
   Lock,
   Sparkles
 } from 'lucide-react';
-import { BADGES_LIST, Badge } from '../data/inductionContent';
+import { Badge, getBadgesList } from '../data/inductionContent';
+import { t } from '../utils/i18n';
 
 interface ApprenticeBadgesHUDProps {
   totalXp: number;
+  lang?: 'es' | 'en';
 }
 
 const ICON_MAP: Record<string, React.ElementType> = {
@@ -26,23 +28,25 @@ const ICON_MAP: Record<string, React.ElementType> = {
   GraduationCap,
 };
 
-export const ApprenticeBadgesHUD: React.FC<ApprenticeBadgesHUDProps> = ({ totalXp }) => {
+export const ApprenticeBadgesHUD: React.FC<ApprenticeBadgesHUDProps> = ({ totalXp, lang = 'es' }) => {
+  const badges = getBadgesList(lang);
+
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-xs space-y-4 transition-colors duration-200">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
           <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-            Insignias de Logro de Inducción
+            {t[lang].badgesTitle}
           </h3>
         </div>
         <div className="text-xs text-slate-500 dark:text-slate-400 font-mono">
-          <span className="font-semibold text-emerald-700 dark:text-emerald-400">{totalXp} XP Acumulado</span>
+          <span className="font-semibold text-emerald-700 dark:text-emerald-400">{totalXp} {t[lang].xpAccumulated}</span>
         </div>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
-        {BADGES_LIST.map((badge: Badge) => {
+        {badges.map((badge: Badge) => {
           const isUnlocked = totalXp >= (badge.unlockedAtXp || 0);
           const IconComponent = ICON_MAP[badge.iconName] || Award;
 
@@ -72,7 +76,7 @@ export const ApprenticeBadgesHUD: React.FC<ApprenticeBadgesHUDProps> = ({ totalX
                   {badge.name}
                 </span>
                 <span className="block text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-0.5 tabular-nums">
-                  {isUnlocked ? 'Desbloqueada' : `${badge.unlockedAtXp} XP`}
+                  {isUnlocked ? (lang === 'en' ? 'Unlocked' : 'Desbloqueada') : `${badge.unlockedAtXp} XP`}
                 </span>
               </div>
 
