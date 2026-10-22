@@ -268,6 +268,23 @@ export default function App() {
     return false;
   });
 
+  // Language state ('es' | 'en') with persistence
+  const [lang, setLang] = useState<'es' | 'en'>(() => {
+    try {
+      const saved = localStorage.getItem('sena_lang');
+      if (saved === 'en' || saved === 'es') return saved;
+    } catch (e) {}
+    return 'es';
+  });
+
+  const handleToggleLang = () => {
+    const nextLang = lang === 'es' ? 'en' : 'es';
+    setLang(nextLang);
+    try {
+      localStorage.setItem('sena_lang', nextLang);
+    } catch (e) {}
+  };
+
   const [isBlurActive, setIsBlurActive] = useState<boolean>(false);
   const [syncToast, setSyncToast] = useState<string | null>(null);
 
@@ -433,6 +450,8 @@ export default function App() {
         onLoginAsLearner={handleLoginAsLearner}
         isDarkMode={isDarkMode}
         onToggleDarkMode={handleToggleDarkMode}
+        lang={lang}
+        onToggleLang={handleToggleLang}
       />
     );
   }
@@ -484,6 +503,8 @@ export default function App() {
         isDarkMode={isDarkMode}
         onToggleDarkMode={handleToggleDarkMode}
         onLogout={handleLogout}
+        lang={lang}
+        onToggleLang={handleToggleLang}
       />
 
       {/* Modo Aprendiz Active Banner for Testing Instructors */}

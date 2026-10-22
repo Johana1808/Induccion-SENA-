@@ -28,6 +28,8 @@ interface RoleSelectionLandingProps {
   onLoginAsLearner: (profile: ApprenticeProfile) => void;
   isDarkMode?: boolean;
   onToggleDarkMode?: () => void;
+  lang?: 'es' | 'en';
+  onToggleLang?: () => void;
 }
 
 export const RoleSelectionLanding: React.FC<RoleSelectionLandingProps> = ({
@@ -37,6 +39,8 @@ export const RoleSelectionLanding: React.FC<RoleSelectionLandingProps> = ({
   onLoginAsLearner,
   isDarkMode = false,
   onToggleDarkMode,
+  lang = 'es',
+  onToggleLang,
 }) => {
   const [selectedRole, setSelectedRole] = useState<'instructor' | 'aprendiz'>(initialRole);
   
@@ -133,6 +137,17 @@ export const RoleSelectionLanding: React.FC<RoleSelectionLandingProps> = ({
                 ) : (
                   <Moon className="w-4 h-4 text-slate-700 hover:-rotate-12 transition-transform duration-300" />
                 )}
+              </button>
+            )}
+
+            {onToggleLang && (
+              <button
+                type="button"
+                onClick={onToggleLang}
+                className="px-2.5 h-9 flex items-center justify-center rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all cursor-pointer shadow-xs font-mono font-bold text-xs"
+                title={lang === 'es' ? 'Switch to English' : 'Cambiar a Español'}
+              >
+                <span>{lang === 'es' ? 'EN' : 'ES'}</span>
               </button>
             )}
           </div>
